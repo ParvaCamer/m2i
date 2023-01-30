@@ -40,7 +40,7 @@ function pickNumber() {
     display.innerHTML = "";
 
     let number = parseInt(prompt('Choisis un nombre entre 0 et 100'));
-    
+
     if (number > 0 && number < 51) {
         display.innerHTML += "Nombre compris entre 0 et 50"
     } else if (number > 50 && number < 76) {
@@ -84,23 +84,62 @@ function averageCalculation() {
     display.innerHTML = "";
 
     let number = parseInt(prompt('Choisis le nombre de notes à ajouter'));
+
     let array = [];
+    let result = 0;
     while (number != 0) {
-        let note = prompt('Ecris la note');
-        if (note == -1) {
-            return
+        let note = parseInt(prompt('Ecris la note'));
+        if (note === -1) {
+            break;
         }
         array.push(note);
-        number--
-        console.log(number, array)
-        let result = 0;
-        for (let i = 0; i < array.length; i++) {
-            let parse = parseInt(array[i]);
-            result += parse / array.length;
-            console.log(result)
-        }
-        display.innerHTML += `${result}`
+        number--;
     }
 
+    for (let i = 0; i < array.length; i++) {
+        result += array[i];
+    }
+    result /= array.length;
+    display.innerHTML += `La moyenne est : ${result}`;
+}
 
+function averageSubject() {
+    document.getElementById('average-subjects').innerHTML = "";
+    document.getElementById('average-student').innerHTML = "";
+    let numberOfStudent = parseInt(prompt("Combien d'élèves êtes-vous ?"));
+
+    let resultMaths = 0, resultFrançais = 0, resultAnglais = 0, resultPhysique = 0, resultChimie = 0;
+
+    let student = {
+        name: "",
+        subject: [
+            ['Maths', resultMaths],
+            ['Français', resultFrançais],
+            ['Anglais', resultAnglais],
+            ['Physique', resultPhysique],
+            ['Chimie', resultChimie]
+        ],
+        result: 0
+    };
+
+    for (let k = 0; k < numberOfStudent; k++) {
+        student.result = 0;
+        student.name = prompt('Quel est ton nom ?');
+        for (let i = 0; i < student.subject.length; i++) {
+            let note = parseInt(prompt(`Écris ta note en ${student.subject[i][0]}`));
+            if (note === -1) {
+                break;
+            }
+            student.subject[i][1] += note;
+            console.log(student.subject[i][0], ' : ', student.subject[i][1])
+            student.result += note;
+            document.getElementById('average-subjects').innerHTML = "";
+        }
+        student.result /= student.subject.length;
+        document.getElementById('average-student').innerHTML += `${student.name}, ta moyenne est de : ${student.result}<br>`;
+    }
+    for (let j = 0; j < student.subject.length; j++) {
+        student.subject[j][1] /= numberOfStudent;
+        document.getElementById('average-subjects').innerHTML += `La moyenne en ${student.subject[j][0]} est de : ${student.subject[j][1]}<br>`;
+    }
 }
