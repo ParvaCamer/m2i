@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Bienvenue chez GTM Bank</h1>
+    <div class="container">
+        <div class="button" id="button-overdraft" onclick="openAccount()">
+            <div class="underline"></div>
+            <a href="#">Obtenir un découvert</a>
+        </div>
+        <div class="button" id="button-withdraw" onclick="withdraw()">
+            <div class="underline"></div>
+            <a href="#">Effectuer un retrait</a>
+        </div>
+        <div id="user-informations">
+            <div id="info-1">
+                <label class="user-info-label">Montant du découvert : (€)</label>
+                <p class="user-info-p" id="overdraft">0</p>
+            </div>
+            <div id="info-2">
+                <label class="user-info-label">Solde actuel : (€)</label>
+                <p class="user-info-p" id="sold">0</p>
+            </div>
+            <div id="info-3">
+                <label class="user-info-label">Retrait effectué : (€)</label>
+                <p class="user-info-p" id="withdraw">0</p>
+            </div>
+            <div id="info-4">
+                <label class="user-info-label">Agios à payer : (€)</label>
+                <p class="user-info-p" id="agios">0</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

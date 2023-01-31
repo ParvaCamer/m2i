@@ -67,7 +67,7 @@ function numberLower100() {
     let display = document.getElementById('pick-lower');
     display.innerHTML = "";
 
-    let number = parseInt(prompt('Choisis un nombre inférieur à 100'));
+    let number;
 
     while (number > 100) {
         number = parseInt(prompt('Choisis un nombre inférieur à 100'));
