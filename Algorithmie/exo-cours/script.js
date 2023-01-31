@@ -143,3 +143,70 @@ function averageSubject() {
         document.getElementById('average-subjects').innerHTML += `La moyenne en ${student.subject[j][0]} est de : ${student.subject[j][1]}<br>`;
     }
 }
+
+function sorting() {
+    let ascending = document.getElementById('ascending-order');
+    let descending = document.getElementById('descending-order');
+    let sortingCount = document.getElementById('sorting-count');
+    ascending.innerHTML = "";
+    descending.innerHTML = "";
+    sortingCount.innerHTML = "";
+
+    let numbers = [];
+    let input;
+    let count = 0;
+
+    while (input !== "q") {
+        input = prompt("Entre un nombre ou écris 'q' pour quitter");
+        if (input === "q") {
+            break;
+        }
+        numbers.push(Number(input));
+    }
+
+    for (let i = 0; i < numbers.length; i++) {
+        count++;
+        for (let j = 0; j < numbers.length; j++) {
+            if (numbers[j] > numbers[j + 1]) {
+                let value = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = value
+            }
+        }
+    }
+
+    ascending.innerHTML += `Nombres triés dans l'ordre croissant : ${numbers}`;
+    descending.innerHTML += `Nombres triés dans l'ordre décroissant : ${numbers.reverse()}`;
+    sortingCount.innerHTML += `Nombres de tours effectués pour le tri : ${count}`;
+}
+
+function objectClass() {
+    let display = document.getElementById('object-class');
+    display.innerHTML = "";
+    let animals = [
+        {
+            name: 'chien',
+            paws: 4,
+            noise: 'aboie'
+        },
+        {
+            name: 'chat',
+            paws: 4,
+            noise: 'miaule'
+        },
+        {
+            name: 'cheval',
+            paws: 4,
+            noise: 'hennit'
+        },
+        {
+            name: 'goéland',
+            paws: 2,
+            noise: 'raille'
+        }
+    ];
+
+    let random = Math.floor(Math.random() * animals.length)
+    console.log(animals[random])
+    display.innerHTML += `Exemple de class : Le ${animals[random].name} a ${animals[random].paws} pattes et il ${animals[random].noise}. Affiche la console pour voir l'objet en détails.`
+}
