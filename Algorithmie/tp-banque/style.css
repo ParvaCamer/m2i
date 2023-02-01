@@ -4,6 +4,7 @@ body {
 }
 
 body {
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -125,13 +126,33 @@ a {
 }
 
 #info-3 {
-    grid-area: 2 / 2 / 3 / 3;
+
+    grid-area: 2 / 1 / 3 / 2;
 }
 
 #info-4 {
-    grid-area: 2 / 1 / 3 / 2;
+    grid-area: 2 / 2 / 3 / 3;
+    color: rgb(196, 17, 17);
+    font-size: 0em;
+    transition: all .7s ease-out;
 }
 
 .user-info-p {
     font-size: 1.2em;
+    font-weight: 900;
+}
+
+.notifications {
+    position: fixed;
+    border: 1px solid red;
+    height: 350px;
+    width: 250px;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.container-notifications {
+    position: absolute;
+
 }

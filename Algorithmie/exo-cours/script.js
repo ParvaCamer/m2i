@@ -208,9 +208,12 @@ function transform(value) {
     if (value === 'hexadécimale') {
         let hex = number.toString(16);
         document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${hex}`;
-    } else {
+    } else if(value === 'décimale') {
         let dec = parseInt(number, 16);
         document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${dec}`
+    } else {
+        let bin = number.toString(2);
+        document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${bin}`
     }
 }
 
