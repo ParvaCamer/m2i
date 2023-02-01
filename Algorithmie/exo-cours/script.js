@@ -1,6 +1,5 @@
 function guessMyAge() {
     let display = document.getElementById('my-age');
-    display.innerHTML = "";
 
     let firstName = prompt('Ton prénom :');
     let lastName = prompt('Ton nom :');
@@ -14,12 +13,11 @@ function guessMyAge() {
     } else {
         child = "Tu es mineur."
     }
-    display.innerHTML += `Tu t'appelles ${firstName} ${lastName} et tu as ${age} ans. ${child}`
+    display.innerHTML = `Tu t'appelles ${firstName} ${lastName} et tu as ${age} ans. ${child}`
 }
 
 function giveNumbers() {
     let display = document.getElementById('give-numbers');
-    display.innerHTML = "";
 
     let firstNumber = parseInt(prompt('Donne moi un premier nombre'));
     let secondNumber = parseInt(prompt('Donne moi un deuxième nombre'));
@@ -32,27 +30,25 @@ function giveNumbers() {
     if (secondNumber == 0) {
         division = 'Division par 0 impossible'
     }
-    display.innerHTML += `Résultat addition : ${addition}.<br> Résultat soustraction : ${soustraction}.<br> Résultat multiplication : ${multiplication}.<br> Résultat division : ${division}.`
+    display.innerHTML = `Résultat addition : ${addition}.<br> Résultat soustraction : ${soustraction}.<br> Résultat multiplication : ${multiplication}.<br> Résultat division : ${division}.`
 }
 
 function pickNumber() {
     let display = document.getElementById('pick-number');
-    display.innerHTML = "";
 
     let number = parseInt(prompt('Choisis un nombre entre 0 et 100'));
 
     if (number > 0 && number < 51) {
-        display.innerHTML += "Nombre compris entre 0 et 50"
+        display.innerHTML = "Nombre compris entre 0 et 50"
     } else if (number > 50 && number < 76) {
-        display.innerHTML += "Nombre compris entre 51 et 75"
+        display.innerHTML = "Nombre compris entre 51 et 75"
     } else {
-        display.innerHTML += "Nombre supérieur à 75 ou inférieur à 0"
+        display.innerHTML = "Nombre supérieur à 75 ou inférieur à 0"
     }
 }
 
 function pickAnotherNumber() {
     let display = document.getElementById('pick-another-number');
-    display.innerHTML = "";
 
     let number = parseInt(prompt('Choisis un nombre entre 0 et 10'));
 
@@ -60,28 +56,27 @@ function pickAnotherNumber() {
         number = parseInt(prompt('Choisis un nombre entre 0 et 10'));
     }
 
-    display.innerHTML += `Le nombre saisi est ${number}`
+    display.innerHTML = `Le nombre saisi est ${number}`
 }
 
 function numberLower100() {
     let display = document.getElementById('pick-lower');
     display.innerHTML = "";
 
-    let number;
+    let number = parseInt(prompt('Choisis un nombre inférieur à 100'));;
 
     while (number > 100) {
-        number = parseInt(prompt('Choisis un nombre inférieur à 100'));
+        number = parseInt(prompt('Le nombre doit être inférieur à 100'));
     }
 
     while (number < 101) {
-        display.innerHTML += `- ${number} `
+        display.innerHTML += `* ${number} `
         number++
     }
 }
 
 function averageCalculation() {
     let display = document.getElementById('average-calculation');
-    display.innerHTML = "";
 
     let number = parseInt(prompt('Choisis le nombre de notes à ajouter'));
 
@@ -100,12 +95,10 @@ function averageCalculation() {
         result += array[i];
     }
     result /= array.length;
-    display.innerHTML += `La moyenne est : ${result}`;
+    display.innerHTML = `La moyenne est : ${result}`;
 }
 
 function averageSubject() {
-    document.getElementById('average-subjects').innerHTML = "";
-    document.getElementById('average-student').innerHTML = "";
     let numberOfStudent = parseInt(prompt("Combien d'élèves êtes-vous ?"));
 
     let resultMaths = 0, resultFrançais = 0, resultAnglais = 0, resultPhysique = 0, resultChimie = 0;
@@ -136,11 +129,11 @@ function averageSubject() {
             document.getElementById('average-subjects').innerHTML = "";
         }
         student.result /= student.subject.length;
-        document.getElementById('average-student').innerHTML += `${student.name}, ta moyenne est de : ${student.result}<br>`;
+        document.getElementById('average-student').innerHTML = `${student.name}, ta moyenne est de : ${student.result}<br>`;
     }
     for (let j = 0; j < student.subject.length; j++) {
         student.subject[j][1] /= numberOfStudent;
-        document.getElementById('average-subjects').innerHTML += `La moyenne en ${student.subject[j][0]} est de : ${student.subject[j][1]}<br>`;
+        document.getElementById('average-subjects').innerHTML = `La moyenne en ${student.subject[j][0]} est de : ${student.subject[j][1]}<br>`;
     }
 }
 
@@ -148,9 +141,6 @@ function sorting() {
     let ascending = document.getElementById('ascending-order');
     let descending = document.getElementById('descending-order');
     let sortingCount = document.getElementById('sorting-count');
-    ascending.innerHTML = "";
-    descending.innerHTML = "";
-    sortingCount.innerHTML = "";
 
     let numbers = [];
     let input;
@@ -175,9 +165,9 @@ function sorting() {
         }
     }
 
-    ascending.innerHTML += `Nombres triés dans l'ordre croissant : ${numbers}`;
-    descending.innerHTML += `Nombres triés dans l'ordre décroissant : ${numbers.reverse()}`;
-    sortingCount.innerHTML += `Nombres de tours effectués pour le tri : ${count}`;
+    ascending.innerHTML = `Nombres triés dans l'ordre croissant : ${numbers}`;
+    descending.innerHTML = `Nombres triés dans l'ordre décroissant : ${numbers.reverse()}`;
+    sortingCount.innerHTML = `Nombres de tours effectués pour le tri : ${count}`;
 }
 
 function objectClass() {
@@ -209,4 +199,117 @@ function objectClass() {
     let random = Math.floor(Math.random() * animals.length)
     console.log(animals[random])
     display.innerHTML += `Exemple de class : Le ${animals[random].name} a ${animals[random].paws} pattes et il ${animals[random].noise}. Affiche la console pour voir l'objet en détails.`
+}
+
+// Levelup //
+function transform(value) {
+    let number = parseInt(prompt(`Écris une valeur pour la transformer en ${value}`))
+
+    if (value === 'hexadécimale') {
+        let hex = number.toString(16);
+        document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${hex}`;
+    } else {
+        let dec = parseInt(number, 16);
+        document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${dec}`
+    }
+}
+
+function taxes() {
+    let age = parseInt(prompt('Quel est ton âge ?'))
+    let sexe = prompt('Es-tu un homme ou une femme ?')
+    if ((age > 20 && sexe === "homme") || ((age > 17 && age < 36) && sexe === "femme")) {
+        document.getElementById('taxes').innerHTML = 'Tu es imposable.'
+    } else {
+        document.getElementById('taxes').innerHTML = "Tu n'es pas imposable."
+    }
+}
+
+function cart() {
+    let maxPrice = 0;
+    let minPrice = Number.MAX_SAFE_INTEGER;
+    let totalItems = 0;
+    let totalPrices = 0; 
+    while (true) {
+        let quantity = parseInt(prompt("Saisissez la quantité commandée:"));
+        if (quantity < 0) {
+            break;
+        }
+        let unitPrice = parseFloat(prompt("Saisissez le prix unitaire:"));
+        if (unitPrice < 0) {
+            break;
+        }
+        let itemPrice = quantity * unitPrice;
+        totalItems += quantity;
+        totalPrices += (itemPrice / totalItems).toFixed(2);
+        if (unitPrice > maxPrice) {
+            maxPrice = unitPrice;
+        }
+        if (unitPrice < minPrice) {
+            minPrice = unitPrice;
+        }
+    }
+    document.getElementById('total-items-cart').innerHTML = `Nombre d'articles : ${totalItems}`;
+    document.getElementById('average-price-cart').innerHTML = `Prix moyen des articles : ${totalPrices} €`;
+    document.getElementById('most-expensive-cart').innerHTML = `Article le plus cher : ${maxPrice} €`
+    document.getElementById('less-expensive-cart').innerHTML = `Article le moins cher : ${minPrice} €`
+}
+
+function print() {
+    let number = parseInt(prompt('Combien de photocopies voulez-vous ?'))
+    let price = 0;
+
+    while (number != 0) {
+        if (number <= 10) {
+            price += 0.10
+        } else if (number > 10 && number <= 20) {
+            price += 0.09
+        } else {
+            price += 0.08
+        }
+        number--
+    }
+    document.getElementById('print').innerHTML = price.toFixed(2) + ' €';
+}
+
+function numberToThe() {
+    let a = parseInt(prompt('Entre une valeur'));
+    let b = parseInt(prompt('Saisir une puissance'));
+    let result = 1;
+
+    while (a < 0) {
+        a = parseInt(prompt('La valeur doit être positive'))
+    }
+    while (b <= 0) {
+        b = parseInt(prompt('La puissance doit être positive'))
+    }
+    while (b > 0) {
+        result *= a;
+        b--
+    }
+    document.getElementById('number-to-the').innerHTML = result;
+}
+
+let average = 0;
+let total = 0;
+let count = 1;
+function temperature() {
+    let temp = parseInt(prompt('Quelle est la température prélevée ?'));
+    total += temp;
+    average = (total / count);
+    count++;
+    let difference = 37 - temp;
+    document.getElementById('average-temperature').innerHTML = `La température moyenne du patient est de ${average}°C`;
+    document.getElementById('difference-temperature').innerHTML = `L'écart par rapport à la température corporelle est de ${difference}°C`;
+}
+
+function transformTemp(value) {
+    let number = parseInt(prompt(`Écris une valeur pour la transformer en ${value}`))
+
+    if (value === 'celcius') {
+        let celcius = (number - 32) / 1.8;
+        document.getElementById('cel-fahr').innerHTML = `${number}°F équivaut à ${celcius}°C`;
+    } else {
+        let fahr = (number * 1.8) + 32;
+        document.getElementById('cel-fahr').innerHTML = `${number}°C équivaut à ${fahr}°F`
+    }
 }

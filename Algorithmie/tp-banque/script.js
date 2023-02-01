@@ -19,7 +19,6 @@ function openAccount() {
     document.getElementById('button-overdraft').style.display = 'none';
     document.getElementById('button-withdraw').style.display = 'inline-flex';
     document.getElementById('user-informations').style.opacity = 1;
-    agios(overdraft, true);
 }
 
 function withdraw() {
