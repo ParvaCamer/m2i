@@ -37,4 +37,4 @@ function displayStars() {
             document.getElementById('display-stars').innerHTML += String(i).repeat(i) + "<br>"
         }
     }
-}
+} 

@@ -201,6 +201,55 @@ function objectClass() {
     display.innerHTML += `Exemple de class : Le ${animals[random].name} a ${animals[random].paws} pattes et il ${animals[random].noise}. Affiche la console pour voir l'objet en détails.`
 }
 
+// Exercices bonus //
+let toNumber = 15;
+function multiplication() {
+    for (let i = 1; i <= toNumber; i++) {
+        document.getElementById('multiplication').innerHTML += `Table de ${i} :<br>`
+        for (let j = 1; j <= 10; j++) {
+            document.getElementById('multiplication').innerHTML += `${i} x ${j} = ${i * j}<br>`
+        }
+    }
+}
+
+function countVowels() {
+    let writeVowels = prompt('Écris une phrase');
+    let arrayVowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+    let count = 0;
+    for (let i = 0; i < writeVowels.length; i++) {
+        for (let j = 0; j < arrayVowels.length; j++) {
+            if (writeVowels[i] == arrayVowels[j]) {
+                count++
+            }
+        }
+    }
+    document.getElementById('count-vowels').innerHTML = `Il y a ${count} voyelles dans la phrase.`
+}
+
+function formula() {
+    let a = parseInt(prompt('Saisir un premier nombre'));
+    let b = parseInt(prompt('Saisir un deuxième nombre'));
+    let c = parseInt(prompt('Saisir un troisième nombre'));
+    let display = document.getElementById('formula');
+    if (a === 0) {
+        if (b === 0) {
+            display.innerHTML = 'Pas de solution.'
+        } else {
+            display.innerHTML = `La solution est : ${-c / b}`
+        }
+    } else {
+        let discriminant = b * b - 4 * a * c;
+        if (discriminant < 0) {
+            display.innerHTML = 'Pas de solution.'
+        } else if (discriminant === 0) {
+            display.innerHTML = `La solution est : ${-b / (2 * a)}`
+        } else {
+            let x1 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            let x2 = (-b + Math.sqrt(discriminant)) / (2 * a);
+            display.innerHTML = `Les solutions sont ${x1} et ${x2}`
+        }
+    }
+}
 // Levelup //
 function transform(value) {
     let number = parseInt(prompt(`Écris une valeur pour la transformer en ${value}`))
@@ -208,7 +257,7 @@ function transform(value) {
     if (value === 'hexadécimale') {
         let hex = number.toString(16);
         document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${hex}`;
-    } else if(value === 'décimale') {
+    } else if (value === 'décimale') {
         let dec = parseInt(number, 16);
         document.getElementById('hex-dec').innerHTML = `La valeur ${number} équivaut à ${dec}`
     } else {
@@ -231,7 +280,7 @@ function cart() {
     let maxPrice = 0;
     let minPrice = Number.MAX_SAFE_INTEGER;
     let totalItems = 0;
-    let totalPrices = 0; 
+    let totalPrices = 0;
     while (true) {
         let quantity = parseInt(prompt("Saisissez la quantité commandée:"));
         if (quantity < 0) {
@@ -315,4 +364,128 @@ function transformTemp(value) {
         let fahr = (number * 1.8) + 32;
         document.getElementById('cel-fahr').innerHTML = `${number}°C équivaut à ${fahr}°F`
     }
+}
+
+function countConsonants() {
+    let writeVowels = prompt('Écris une phrase');
+    let consonants = 'zrtpqsdfghjklmwxcvbn';
+    let count = 0;
+    for (let i = 0; i < writeVowels.length; i++) {
+        for (let j = 0; j < consonants.length; j++) {
+            if (writeVowels[i] == consonants[j]) {
+                count++
+            }
+        }
+    }
+    document.getElementById('count-consonants').innerHTML = `Il y a ${count} consonnes dans la phrase.`
+}
+
+function swapNumbers() {
+    let a = parseInt(prompt('Entre un premier nombre'));
+    let b = parseInt(prompt('Entre un deuxième nombre'));
+    let c = 0;
+
+    c = a
+    a = b
+    b = c
+    document.getElementById('swap-numbers').innerHTML = `Le premier nombre est donc ${a} et le deuxième est ${b}`;
+}
+
+function palindrome() {
+    let word = prompt('Écris premier un mot');
+    word = word.toLowerCase().replace(/[\W_]/g, '')
+    let palin = word.split('').reverse().join('')
+    if (word === palin) {
+        document.getElementById('palindrome').innerHTML = 'Le mot est un palindrome'
+    } else {
+        document.getElementById('palindrome').innerHTML = 'Le mot n\'est pas un palindrome'
+    }
+}
+
+function highestNumber() {
+    let howMuch = parseInt(prompt('Combien de nombres veux-tu entrer ?'))
+    let array = [];
+
+    while (howMuch != 0) {
+        let number = parseInt(prompt('Entre un nombre'));
+        array.push(number);
+        howMuch--
+    }
+    let highest = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (highest < array[i]) {
+            highest = array[i];
+        }
+    }
+    document.getElementById('highest-number').innerHTML = `Le nombre le plus grand est ${highest}`
+}
+
+function lowestNumber() {
+    let howMuch = parseInt(prompt('Combien de nombres veux-tu entrer ?'))
+    let array = [];
+
+    while (howMuch != 0) {
+        let number = parseInt(prompt('Entre un nombre'));
+        array.push(number);
+        howMuch--
+    }
+    document.getElementById('lowest-number').innerHTML = `Le nombre le plus petit est ${Math.min(...array)}`
+}
+
+function longestWord() {
+    let sentence = prompt('Écrire une phrase');
+    let array = sentence.split(' ')
+    let highest = 0;
+    let longest = "";
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].length > highest) {
+            highest = array[i].length;
+            longest = array[i];
+        }
+    }
+    document.getElementById('longest-word').innerHTML = `Le mot le plus long de la phrase est ${longest}`
+}
+
+function shortestWord() {
+    let sentence = prompt('Écrire une phrase');
+    let array = sentence.split(' ')
+    let lowest = array[0].length;
+    for (let i = 0; i < array.length; i++) {
+        if (lowest > array[i].length) {
+            lowest = array[i].length;
+        }
+    }
+    document.getElementById('shortest-word').innerHTML = `La taille du mot le plus petit de la phrase est ${lowest}`
+}
+
+function longestNumberWord() {
+    let sentence = prompt('Écrire une phrase');
+    let array = sentence.split(' ')
+    let highest = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].length > highest) {
+            highest = array[i].length;
+        }
+    }
+    document.getElementById('longest-number-word').innerHTML = `La taille du mot le plus long de la phrase est ${highest}`
+}
+
+function highestNumberArray() {
+    let result = [];
+    while (42) {    
+        let numbers = prompt('Entre un ou des nombres. "s" pour stop')
+        if (numbers === 's') {
+            break;
+        }
+        numbers = numbers.split(' ');
+        let check = 0;
+        for (let i = 0; i < numbers.length; i++) {
+            if (+numbers[i] > check) {
+                check = +numbers[i]
+            }
+        }
+        result.push(check);
+        
+    }
+    document.getElementById('highest-number-array').innerHTML = `Les nombres les plus grand sont : ${result}`
 }
