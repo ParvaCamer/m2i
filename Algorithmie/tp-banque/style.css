@@ -18,6 +18,8 @@ body {
             hsl(218.26, 29.22%, 20.65%) 31.1%,
             hsl(218, 37%, 23%) 38.1%,
             hsl(215.97, 43.98%, 25.22%) 45%,
+            hsl(217.05, 37.11%, 22.89%) 38.1%,
+            hsl(216, 44%, 25%) 45%,
             hsl(215.02, 49.97%, 27.58%) 51.6%,
             hsl(214.18, 55.24%, 29.96%) 58.1%,
             hsl(213.44, 59.93%, 32.34%) 64.4%,
@@ -248,6 +250,7 @@ a {
         height: auto;
         object-fit: cover;
     }
+
     .notifications {
         margin-top: 50px;
         display: flex;
@@ -269,4 +272,18 @@ a {
         font-size: 1.15em;
         margin-bottom: 0;
     }
+
+    /* border-radius: 12px;
+    background-color: rgba(50, 70, 99, 0.651);
+    height: 350px;
+    width: 250px;
+    bottom: -50px;
+    right: 5px;
+    padding: 20px; */
+}
+
+#notifications-title {
+    margin: 0 0 5px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid rgba(117, 117, 117, 0.651);
 }
