@@ -1,7 +1,6 @@
 let soldInput = document.getElementById('amount-informations-input-sold-value');
 let overdraftInput = document.getElementById('amount-informations-input-overdraft');
 let withdrawInput = document.getElementById('withdraw-informations-input-sold-value');
-let errorText = document.getElementById('amount-informations-p');
 
 let overdraftValue = document.getElementById('overdraft');
 let soldValue = document.getElementById('sold');
@@ -9,37 +8,41 @@ let withdrawValue = document.getElementById('withdraw');
 let hasWithdraw = 0;
 
 function openAccount() {
-    errorText.innerHTML = "";
-    document.getElementById('p-notifications').innerHTML = `${displayTime()}Bienvenue chez nous !<br>`
+    document.getElementById('amount-informations-p').innerHTML = "";
     /*let overdraft = parseInt(prompt("Saisissez le montant du découvert entre 100 et 2000€"));
     while (overdraft < 100 || overdraft > 2000) {
         overdraft = parseInt(prompt("Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide."));
     }*/
-    let overdraft = overdraftInput.value;
+    //let overdraft = overdraftInput.value;
+    let overdraft = 500
     if (overdraft < 100 || overdraft > 2000) {
-        errorText.innerHTML += "Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>"
+        changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
     }
     /*let initialAmount = parseInt(prompt("Quel est le montant à transférer pour l'ouverture du compte ? (minimum de 500 €)"));
     while (initialAmount < 500) {
         initialAmount = parseInt(prompt("Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide."));
     }*/
-    let initialAmount = soldInput.value;
+    //let initialAmount = soldInput.value;
+    let initialAmount = 500
     if (initialAmount < 500) {
-        errorText.innerHTML += "Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>"
+        changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
     }
 
-    if (errorText.innerHTML != "") {
+    if (document.getElementById('amount-informations-p').innerHTML != "") {
         return
     } else {
+        document.getElementById('p-notifications').innerHTML = "";
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
         soldValue.innerHTML = initialAmount;
         overdraftValue.innerHTML = overdraft;
-        document.getElementById('p-notifications').innerHTML += `${displayTime()}Votre solde est de ${initialAmount}€.<br>${displayTime()}Votre découvert est de ${overdraft}€.<br>`;
         changeStyle('amount-informations', 'display', 'none');
         changeStyle('withdraw-informations', 'display', 'block');
         changeStyle('user-informations', 'opacity', 1);
         changeStyle('amount-informations','display', 0);
     }
 }
+openAccount()
 
 let runAgios = true;
 function withdraw() {
@@ -52,12 +55,12 @@ function withdraw() {
         sold -= withdraw;
         hasWithdraw += withdraw;
         soldValue.innerHTML = sold;
-        document.getElementById('p-notifications').innerHTML += `${displayTime()}Retrait de ${withdraw}€ effectué.<br>`;
-        document.getElementById('p-notifications').innerHTML += `${displayTime()}Solde restant : ${sold}€<br>`;
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Retrait de ${withdraw}€ effectué.<br>`);
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Solde restant : ${sold}€<br>`);
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
         //withdraw = parseInt(prompt("Entrez le montant souhaité pour le retrait (0 pour quitter) :"));
     } else {
-        document.getElementById('p-notifications').innerHTML += `${displayTime()}Solde insuffisant ! <br>`;
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Solde insuffisant ! <br>`)
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
     }
     if (sold < 0 && sold < overdraft) {
@@ -83,10 +86,33 @@ function agios(sold, askTime) {
 }
 
 function changeStyle(id, property, value) {
-    return document.getElementById(id).style[property] = value
+    if (property === 'innerHTML') {
+        document.getElementById(id).innerHTML += value;
+    } else {
+        document.getElementById(id).style[property] = value;
+    }
 }
 
-function show() {
+let amountSwitch = false;
+function switchAmount() {
+    if (amountSwitch) {
+        amountSwitch = false;
+        changeStyle('deposit-informations-div', 'display', 'block');
+        changeStyle('button-deposit', 'display', 'inline-flex');
+        changeStyle('withdraw-informations-div', 'display', 'none');
+        changeStyle('button-withdraw', 'display', 'none');
+        changeStyle('svg-informations', 'transform', 'rotate(0deg)');
+    } else {
+        amountSwitch = true;
+        changeStyle('deposit-informations-div', 'display', 'none');
+        changeStyle('button-deposit', 'display', 'none');
+        changeStyle('withdraw-informations-div', 'display', 'block');
+        changeStyle('button-withdraw', 'display', 'inline-flex');
+        changeStyle('svg-informations', 'transform', 'rotate(180deg)');
+    }
+}
+
+function showNotifications() {
     let container = document.getElementById('notifications');
     let display = document.getElementById('container-notifications');
 
@@ -130,5 +156,5 @@ function displayTime() {
     let now = new Date();
     let hour = now.getHours();
     let min = now.getMinutes();
-    return `<b>${hour}h${min}: </b>`
+    return `<b>${hour}h${min.toString().padStart(2, '0')}: </b>`
 }

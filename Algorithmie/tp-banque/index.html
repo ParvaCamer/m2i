@@ -13,16 +13,22 @@
     <h1>Bienvenue chez GTM Bank</h1>
     <div class="container">
         <div id="amount-informations" class="amount-informations">
-            <div class="amount-informations-div">
-                <h4 for="" id="amount-informations-sold" class="amount-informations-title">Montant à transférer (500€ minimum)</h4>
-                <input type="number" id="amount-informations-input-sold-value" class="amount-informations-input" placeholder="Ex : 500€">
-            </div>
-            <div class="amount-informations-div">
-                <h4 for="" id="amount-informations-overdraft" class="amount-informations-title">Montant du découvert (entre 100€ et 2000€)</h4>
-                <input type="number" id="amount-informations-input-overdraft" class="amount-informations-input" placeholder="Ex : 1000€">
+            <div class="amount-informations-flex">
+                <div class="amount-informations-div">
+                    <h4 for="" id="amount-informations-sold" class="amount-informations-title">Montant à transférer
+                        (500€ minimum)</h4>
+                    <input type="number" id="amount-informations-input-sold-value" class="amount-informations-input"
+                        placeholder="Ex : 500€">
+                </div>
+                <div class="amount-informations-div">
+                    <h4 for="" id="amount-informations-overdraft" class="amount-informations-title">Montant du découvert
+                        (entre 100€ et 2000€)</h4>
+                    <input type="number" id="amount-informations-input-overdraft" class="amount-informations-input"
+                        placeholder="Ex : 1000€">
+                </div>
             </div>
             <div class="amount-informations-error">
-               <p id="amount-informations-p" class="amount-informations-p"></p> 
+                <p id="amount-informations-p" class="amount-informations-p"></p>
             </div>
             <div class="button" id="button-overdraft" onclick="openAccount()">
                 <div class="underline"></div>
@@ -30,16 +36,42 @@
             </div>
         </div>
         <div id="withdraw-informations" class="amount-informations">
-            <div class="amount-informations-div">
-                <h4 for="" id="withdraw-informations-sold" class="amount-informations-title">Retrait à effectuer</h4>
-                <input type="number" id="withdraw-informations-input-sold-value" class="amount-informations-input" placeholder="Ex : 500€">
+            <div class="amount-informations-flex">
+                <div class="amount-informations-div" id="deposit-informations-div">
+                    <h4 for="" id="deposit-informations-sold" class="amount-informations-title">Dépôt à effectuer
+                    </h4>
+                    <input type="number" id="deposit-informations-input-sold-value" class="amount-informations-input"
+                        placeholder="Ex : 500€">
+                </div>
+                <div class="amount-informations-div" id="withdraw-informations-div">
+                    <h4 for="" id="withdraw-informations-sold" class="amount-informations-title">Retrait à effectuer
+                    </h4>
+                    <input type="number" id="withdraw-informations-input-sold-value" class="amount-informations-input"
+                        placeholder="Ex : 500€">
+                </div>
+            </div>
+            <div class="amount-informations-svg">
+                <img id="svg-informations" class="svg-informations" src="./assets/arrow-up.png" alt="arrow-svg" />
             </div>
             <div class="amount-informations-error">
-               <p id="amount-informations-p" class="amount-informations-p"></p> 
+                <p id="amount-informations-p" class="amount-informations-p"></p>
             </div>
-            <div class="button" id="button-withdraw" onclick="withdraw()">
-                <div class="underline"></div>
-                <a href="#">Effectuer un retrait</a>
+            <div class="amount-informations-button">
+                <div class="amount-informations-switch" onclick="switchAmount()">
+                    <svg class="amount-informations-arrows" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                    </svg>
+                </div>
+                <div class="button" id="button-deposit" onclick="deposit()">
+                    <div class="underline"></div>
+                    <a href="#">Effectuer un dépôt</a>
+                </div>
+                <div class="button" id="button-withdraw" onclick="withdraw()">
+                    <div class="underline"></div>
+                    <a href="#">Effectuer un retrait</a>
+                </div>
             </div>
         </div>
         <div id="user-informations">
@@ -60,7 +92,7 @@
                 <p class="user-info-p" id="agios">0</p>
             </div>
         </div>
-        <div class="notifications" id="notifications" onclick="show()">
+        <div class="notifications" id="notifications" onclick="showNotifications()">
             <h3 id="notifications-title">Notifications</h3>
             <div id="notifications-line"></div>
             <div id="container-notifications">
@@ -68,11 +100,6 @@
             </div>
             <img id="bell" class="notifications-bell" src="./assets/cloche.png">
         </div>
-
-    </div>
-    <div class="notifications">
-        <h3 id="notifications-title">Notifications</h3>
-        <p id="p-notifications"></p>
     </div>
     <script src="script.js"></script>
 </body>

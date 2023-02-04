@@ -42,22 +42,20 @@ h1 {
     flex-direction: column;
     width: 700px;
     height: 700px;
-    justify-content: space-evenly;
+    justify-content: space-around;
     text-align: center;
     align-items: center;
 }
 
-.amount-informations {
+.amount-informations-flex {
     display: flex;
-    gap: 100px;
-}
-
-.amount-informations-div {
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 50px;
 }
 
 .amount-informations-title {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .amount-informations-input {
@@ -67,11 +65,33 @@ h1 {
     border: none;
 }
 
+.amount-informations-input:focus {
+    outline: none;
+}
+
+.svg-informations {
+    width: 70px;
+    height: 90px;
+}
+
 .amount-informations-error {
-    display: flex;
-    width: 450px;
-    margin: 0 30px 40px 30px;
+    width: 100%;
     color: rgb(226, 6, 6);
+}
+
+.amount-informations-button {
+    position: relative;
+}
+
+.amount-informations-switch {
+    cursor: pointer;
+}
+
+.amount-informations-arrows {
+    position: absolute;
+    width: 50px;
+    left: -60px;
+    top: 40px;
 }
 
 .button {
@@ -90,6 +110,11 @@ h1 {
     overflow: hidden;
 }
 
+#button-withdraw,
+#withdraw-informations-div {
+    display: none;
+}
+
 a {
     color: #BFC0C0;
     text-decoration: none;
@@ -97,14 +122,16 @@ a {
 }
 
 #button-overdraft,
-#button-withdraw {
+#button-withdraw,
+#button-deposit {
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
 
 #button-overdraft a,
-#button-withdraw a {
+#button-withdraw a,
+#button-deposit a {
     position: relative;
     transition: all .45s ease-Out;
 }
@@ -122,7 +149,8 @@ a {
 }
 
 #button-overdraft:hover .underline,
-#button-withdraw:hover .underline {
+#button-withdraw:hover .underline,
+#button-deposit:hover .underline {
     left: 0;
 }
 
@@ -201,10 +229,14 @@ a {
 }
 
 #notifications-line {
-    border: 1.5px solid rgb(129, 129, 129);
+    border: 1.5px solid #818181;
     border-radius: 10px;
     width: 100%;
     margin-bottom: 10px;
+}
+
+#p-notifications {
+    margin-top: 0;
 }
 
 .notifications-bell {
@@ -272,18 +304,4 @@ a {
         font-size: 1.15em;
         margin-bottom: 0;
     }
-
-    /* border-radius: 12px;
-    background-color: rgba(50, 70, 99, 0.651);
-    height: 350px;
-    width: 250px;
-    bottom: -50px;
-    right: 5px;
-    padding: 20px; */
-}
-
-#notifications-title {
-    margin: 0 0 5px 0;
-    padding: 0 0 10px 0;
-    border-bottom: 1px solid rgba(117, 117, 117, 0.651);
 }
