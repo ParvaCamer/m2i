@@ -64,7 +64,7 @@ fieldset {
 }
 
 .input-radio:checked {
-    border: 8px solid #818181;
+    border: 8px solid #e2e2e2;
 }
 
 .container-user {
