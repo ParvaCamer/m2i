@@ -7,23 +7,30 @@ let soldValue = document.getElementById('sold');
 let withdrawValue = document.getElementById('withdraw');
 let hasWithdraw = 0;
 
+const inputs = document.querySelectorAll('.input-radio');
+
+inputs.forEach(input => {
+    input.addEventListener('click', function() {
+        inputs.forEach(input => {
+            input.checked = false;
+        });
+        this.checked = true;
+    });
+});
+
 function openAccount() {
+    changeStyle('button-open-account', 'opacity', '0');
+    changeStyle('button-open-account', 'cursor', 'default');
+    changeStyle('button-open-account-a', 'cursor', 'default');
+}
+
+function getOverdraft() {
     document.getElementById('amount-informations-p').innerHTML = "";
-    /*let overdraft = parseInt(prompt("Saisissez le montant du découvert entre 100 et 2000€"));
-    while (overdraft < 100 || overdraft > 2000) {
-        overdraft = parseInt(prompt("Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide."));
-    }*/
-    //let overdraft = overdraftInput.value;
-    let overdraft = 500
+    let overdraft = overdraftInput.value;
     if (overdraft < 100 || overdraft > 2000) {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
     }
-    /*let initialAmount = parseInt(prompt("Quel est le montant à transférer pour l'ouverture du compte ? (minimum de 500 €)"));
-    while (initialAmount < 500) {
-        initialAmount = parseInt(prompt("Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide."));
-    }*/
-    //let initialAmount = soldInput.value;
-    let initialAmount = 500
+    let initialAmount = soldInput.value;
     if (initialAmount < 500) {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
     }
@@ -36,13 +43,14 @@ function openAccount() {
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
         soldValue.innerHTML = initialAmount;
         overdraftValue.innerHTML = overdraft;
-        changeStyle('amount-informations', 'display', 'none');
-        changeStyle('withdraw-informations', 'display', 'block');
-        changeStyle('user-informations', 'opacity', 1);
-        changeStyle('amount-informations','display', 0);
+        changeStyle('container-user', 'display', 'grid');
+        changeStyle('container-home', 'display', 'none');
+        setTimeout(() => {
+            changeStyle('container-user-informations', 'opacity', 1);
+            changeStyle('container-button', 'opacity', '1');
+        }, 100);
     }
 }
-openAccount()
 
 let runAgios = true;
 function withdraw() {

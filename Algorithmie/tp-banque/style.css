@@ -31,20 +31,76 @@ body {
             hsl(210, 82.05%, 45.88%) 100%);
 }
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 50px;
-}
-
-.container {
-    border: none;
+.container-home {
     display: flex;
     flex-direction: column;
-    width: 700px;
-    height: 700px;
-    justify-content: space-around;
     text-align: center;
     align-items: center;
+}
+
+#button-open-account {
+    opacity: 1;
+    transition: 0.2s all ease-out;
+}
+
+fieldset {
+    text-align: left;
+    display: flex;
+    width: 200px;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.input-radio {
+    appearance: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #cecece;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.input-radio:checked {
+    border: 8px solid #818181;
+}
+
+.container-user {
+    border: none;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: 75vw;
+    height: 800px;
+    text-align: center;
+}
+
+.container-operations {
+    position: relative;
+    grid-area: 1 / 2 / 4 / 3;
+}
+
+.background-word {
+    position: absolute;
+    margin: 0;
+    opacity: 0.1;
+    top: 140px;
+    left: 40px;
+    font-size: 15vw;
+    pointer-events: none;
+}
+
+.amount-informations {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 550px;
 }
 
 .amount-informations-flex {
@@ -85,13 +141,13 @@ h1 {
 
 .amount-informations-switch {
     cursor: pointer;
+    position: absolute;
+    left: 5vw;
+    top: 45vh;
 }
 
 .amount-informations-arrows {
-    position: absolute;
     width: 50px;
-    left: -60px;
-    top: 40px;
 }
 
 .button {
@@ -123,7 +179,8 @@ a {
 
 #button-overdraft,
 #button-withdraw,
-#button-deposit {
+#button-deposit,
+#button-open-account {
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -131,7 +188,8 @@ a {
 
 #button-overdraft a,
 #button-withdraw a,
-#button-deposit a {
+#button-deposit a,
+#button-open-account a {
     position: relative;
     transition: all .45s ease-Out;
 }
@@ -150,7 +208,8 @@ a {
 
 #button-overdraft:hover .underline,
 #button-withdraw:hover .underline,
-#button-deposit:hover .underline {
+#button-deposit:hover .underline,
+#button-open-account:hover .underline {
     left: 0;
 }
 
@@ -158,18 +217,23 @@ a {
     display: none;
 }
 
-#user-informations {
+#container-user-informations {
+    grid-area: 1 / 1 / 3 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #ffffff10;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 90px;
-    grid-row-gap: 0px;
-    margin-top: 50px;
-    width: 75%;
-    padding: 30px 20px;
+    margin: 50px 0 0 100px;
+    padding: 10px 30px 20px 30px;
+    width: 375px;
     opacity: 0;
     transition: all .7s ease-in-out;
+    text-align: left;
+}
+
+h1 {
+    font-size: 1.7em;
+    margin: 10px 0 5px 0;
 }
 
 #info-1 {
@@ -192,13 +256,44 @@ a {
     transition: all .25s ease-out;
 }
 
+.container-user-informations-title > span {
+    font-size: 0.9em;
+}
+
+.container-user-informations-infos {
+    display: flex;
+    justify-content: space-between;
+}
+
 .user-info-label {
-    font-size: 1.0em;
+    font-size: 1.1em;
 }
 
 .user-info-p {
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: 900;
+    margin: 0;
+}
+
+.container-button {
+    grid-area: 3 / 1 / 4 / 2;
+    display: flex;
+    justify-content: center;
+    margin: 40px 100px 0 100px;
+    gap: 100px;
+    opacity: 0;
+    transition: all 0.25s ease-in;
+}
+
+.container-button-custom {
+    width: 75px;
+    height: 75px;
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid #cecece;
+    background-color: transparent;
+    color: #cecece;
+    cursor: pointer;
 }
 
 .notifications {
@@ -246,7 +341,7 @@ a {
 /** Border-radius **/
 .container,
 .amount-informations-input,
-#user-informations,
+#container-user-informations,
 .notifications {
     border-radius: 12px;
 }
@@ -266,7 +361,7 @@ a {
         text-align: inherit;
     }
 
-    #user-informations {
+    #container-user-informations {
         margin-top: 0;
         width: 50%;
         grid-column-gap: 0px;
