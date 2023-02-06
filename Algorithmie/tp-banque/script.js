@@ -46,9 +46,19 @@ function switchInputRadio(value) {
     }
 }
 
+console.log(localStorage)
 if (localStorage.length > 0) {
-    getOverdraft()
+    if (localStorage.sold > 0) {
+        soldInput.value = localStorage.sold;
+        console.log(localStorage.overdraft)
+        if (localStorage.overdraft > 0) {
+            console.log(localStorage.overdraft)
+            overdraftInput.value = localStorage.overdraft;
+        }
+        getOverdraft()
+    }
 }
+//localStorage.clear()
 
 function getOverdraft() {
     document.getElementById('amount-informations-p').innerHTML = "";
@@ -57,7 +67,6 @@ function getOverdraft() {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
     }
     let initialAmount = soldInput.value;
-    //let initialAmount = 500
     if (initialAmount < 500) {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
     }
@@ -83,6 +92,8 @@ function getOverdraft() {
             changeStyle('container-user-informations', 'opacity', 1);
             changeStyle('container-button', 'opacity', '1');
         }, 100);
+        localStorage.sold = soldValue.innerHTML;
+        localStorage.overdraft = overdraftValue.innerHTML;
     }
 }
 
