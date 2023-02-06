@@ -10,7 +10,7 @@ let hasWithdraw = 0;
 const inputs = document.querySelectorAll('.input-radio');
 
 inputs.forEach(input => {
-    input.addEventListener('click', function() {
+    input.addEventListener('click', function () {
         inputs.forEach(input => {
             input.checked = false;
         });
@@ -19,18 +19,45 @@ inputs.forEach(input => {
 });
 
 function openAccount() {
+    changeStyle('display-open-account', 'display', 'flex');
     changeStyle('button-open-account', 'opacity', '0');
     changeStyle('button-open-account', 'cursor', 'default');
     changeStyle('button-open-account-a', 'cursor', 'default');
+    changeStyle('container-home-fieldset', 'opacity', 1);
+    changeStyle('amount-informations', 'opacity', 1);
+    changeStyle('informations-sold', 'display', 'block');
+    changeStyle('informations-sold', 'opacity', 1);
+}
+
+let displayErrorOverdraft = false;
+function switchInputRadio(value) {
+    if (value) {
+        displayErrorOverdraft = value;
+        changeStyle('informations-overdraft', 'display', 'block');
+        setTimeout(() => {
+            changeStyle('informations-overdraft', 'opacity', 1);
+        }, 300);
+    } else {
+        displayErrorOverdraft = value;
+        setTimeout(() => {
+            changeStyle('informations-overdraft', 'opacity', 0);
+        }, 500);
+        changeStyle('informations-overdraft', 'display', 'none');
+    }
+}
+
+if (localStorage.length > 0) {
+    getOverdraft()
 }
 
 function getOverdraft() {
     document.getElementById('amount-informations-p').innerHTML = "";
     let overdraft = overdraftInput.value;
-    if (overdraft < 100 || overdraft > 2000) {
+    if ((overdraft < 100 || overdraft > 2000) && displayErrorOverdraft) {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
     }
     let initialAmount = soldInput.value;
+    //let initialAmount = 500
     if (initialAmount < 500) {
         changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
     }
@@ -40,9 +67,16 @@ function getOverdraft() {
     } else {
         document.getElementById('p-notifications').innerHTML = "";
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
-        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>`);
         soldValue.innerHTML = initialAmount;
-        overdraftValue.innerHTML = overdraft;
+        if (displayErrorOverdraft) {
+            overdraftValue.innerHTML = overdraft;
+            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
+            changeStyle('button-custom-agios', 'display', 'block');
+            document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+        } else {
+            overdraftValue.innerHTML = 0;
+        }
         changeStyle('container-user', 'display', 'grid');
         changeStyle('container-home', 'display', 'none');
         setTimeout(() => {
@@ -53,11 +87,24 @@ function getOverdraft() {
 }
 
 let runAgios = true;
+function deposit() {
+    let doc = document.getElementById('deposit-informations-input-sold-value');
+    let value = parseInt(doc.value);
+    if (value < 0 || isNaN(value)) {
+        changeStyle('amount-informations-p-e', 'innerHTML', 'Le dépôt doit être supérieur à 0€.');
+    } else {
+        soldValue.innerHTML = value + +soldValue.innerHTML;
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Vous avez déposé ${value}€.<br>`);
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${soldValue.innerHTML}€.<br>`);
+        document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+    }
+    doc.value = "";
+}
+
 function withdraw() {
-    hasWithdraw = +hasWithdraw;    
+    hasWithdraw = +hasWithdraw;
     let overdraft = +overdraftValue.innerHTML;
     let sold = +soldValue.innerHTML;
-    //let withdraw = parseInt(prompt("Entrez le montant du retrait (0 pour quitter)"));
     let withdraw = +withdrawInput.value;
     if (sold + overdraft >= withdraw) {
         sold -= withdraw;
@@ -66,27 +113,54 @@ function withdraw() {
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Retrait de ${withdraw}€ effectué.<br>`);
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Solde restant : ${sold}€<br>`);
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
-        //withdraw = parseInt(prompt("Entrez le montant souhaité pour le retrait (0 pour quitter) :"));
     } else {
-        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Solde insuffisant ! <br>`)
+        changeStyle('amount-informations-p-e', 'innerHTML', 'Solde insuffisant !');
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Solde insuffisant ! <br>`);
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
     }
     if (sold < 0 && sold < overdraft) {
-        agios(sold, runAgios);
+        agios(sold, null, runAgios);
         runAgios = false;
+        changeStyle('button-custom-agios', 'display', 'block');
     }
     withdrawValue.innerHTML = hasWithdraw;
 }
 
+function askOverdraft() {
+    let value = parseInt(document.getElementById('amount-informations-input-ask-overdraft').value);
+    let valueInner = +overdraftValue.innerHTML;
+    if (value < 100 || value > 2000) {
+        changeStyle('amount-informations-p-error', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
+    } else {
+        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Demande de découvert de ${value}€ autorisé.<br>`);
+        document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+        overdraftValue.innerHTML = valueInner + value;
+    }
+}
+
+function calculAgios() {
+    let agiosInput = parseInt(document.getElementById('amount-informations-input-agios').value);
+    if (agiosInput < 1 || agiosInput > 365 || isNaN( agiosInput)) {
+        changeStyle('amount-informations-p-error-agios', 'innerHTML', 'Le nombre de jours doit être compris entre 1 et 365');
+    } else {
+        agios(soldValue.innerHTML, agiosInput, false)
+    }
+}
+
 let time;
-function agios(sold, askTime) {
+function agios(sold, timeValue, askTime) {
     if (askTime) {
         time = parseInt(prompt("Solde négatif. Saisissez le nombre de jour d'utilisation du découvert"));
     }
-    while (time < 1 || time > 365) {
+    while (time < 1 || time > 365 || isNaN(time)) {
         time = parseInt(prompt("Le nombre de jours doit être compris entre 1 et 365"));
     }
-    let interest = (-sold * time * 0.1 / 365).toFixed(2)
+    let interest;
+    if (timeValue != null){
+        interest = (-sold * timeValue * 0.1 / 365).toFixed(2)
+    } else {
+        interest = (-sold * time * 0.1 / 365).toFixed(2)
+    }
     changeStyle('info-4', 'fontSize', '1.1em');
     document.getElementById('agios').innerHTML = interest;
     document.getElementById('p-notifications').innerHTML += `${displayTime()}Vos agios sont de ${interest}€.<br>`;
@@ -101,22 +175,46 @@ function changeStyle(id, property, value) {
     }
 }
 
-let amountSwitch = false;
-function switchAmount() {
-    if (amountSwitch) {
-        amountSwitch = false;
+function displayOperations(value) {
+    document.getElementById('amount-informations-p-e').innerHTML = "";
+    document.getElementById('withdraw-informations-input-sold-value').value = "";
+    document.getElementById('deposit-informations-input-sold-value').value = "";
+    document.getElementById('amount-informations-input-ask-overdraft').value = "";
+    if (value === 'deposit') {
+        changeStyle('container-operations-withdraw-informations', 'display', 'flex');
         changeStyle('deposit-informations-div', 'display', 'block');
+        changeStyle('deposit-informations-div', 'opacity', 1);
         changeStyle('button-deposit', 'display', 'inline-flex');
-        changeStyle('withdraw-informations-div', 'display', 'none');
-        changeStyle('button-withdraw', 'display', 'none');
         changeStyle('svg-informations', 'transform', 'rotate(0deg)');
-    } else {
-        amountSwitch = true;
-        changeStyle('deposit-informations-div', 'display', 'none');
-        changeStyle('button-deposit', 'display', 'none');
+        changeStyle('withdraw-informations-div', 'display', 'none');
+        changeStyle('withdraw-informations-div', 'opacity', 0);
+        changeStyle('button-withdraw', 'display', 'none');
+        changeStyle('amount-overdraft', 'display', 'none');
+        changeStyle('amount-overdraft', 'opacity', 0);
+        changeStyle('amount-agios', 'display', 'none');
+    } else if (value === 'withdraw') {
+        changeStyle('container-operations-withdraw-informations', 'display', 'flex');
         changeStyle('withdraw-informations-div', 'display', 'block');
+        changeStyle('withdraw-informations-div', 'opacity', 1);
         changeStyle('button-withdraw', 'display', 'inline-flex');
         changeStyle('svg-informations', 'transform', 'rotate(180deg)');
+        changeStyle('deposit-informations-div', 'display', 'none');
+        changeStyle('deposit-informations-div', 'opacity', 0);
+        changeStyle('button-deposit', 'display', 'none');
+        changeStyle('amount-overdraft', 'display', 'none');
+        changeStyle('amount-overdraft', 'opacity', 0);
+        changeStyle('amount-agios', 'display', 'none');
+    } else if (value === 'overdraft') {
+        changeStyle('amount-overdraft', 'display', 'flex');
+        changeStyle('amount-overdraft', 'opacity', 1);
+        changeStyle('container-operations-withdraw-informations', 'display', 'none');
+        changeStyle('amount-agios', 'display', 'none');
+    } else if (value === 'agios') {
+        changeStyle('amount-agios', 'display', 'flex');
+        changeStyle('amount-agios', 'opacity', 1);
+        changeStyle('container-operations-withdraw-informations', 'display', 'none');
+        changeStyle('amount-overdraft', 'display', 'none');
+        changeStyle('amount-overdraft', 'opacity', 0);
     }
 }
 
