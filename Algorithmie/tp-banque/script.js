@@ -44,56 +44,78 @@ function switchInputRadio(value) {
         }, 500);
         changeStyle('informations-overdraft', 'display', 'none');
     }
+    return value
 }
 
-console.log(localStorage)
-if (localStorage.length > 0) {
-    if (localStorage.sold > 0) {
-        soldInput.value = localStorage.sold;
-        console.log(localStorage.overdraft)
-        if (localStorage.overdraft > 0) {
-            console.log(localStorage.overdraft)
-            overdraftInput.value = localStorage.overdraft;
-        }
-        getOverdraft()
-    }
+function reload() {
+    localStorage.clear();
+    window.location.reload();
 }
-//localStorage.clear()
+console.log(localStorage)
+
+if (localStorage.length > 0) {
+    soldInput.value = localStorage.sold;
+    overdraftInput.value = localStorage.overdraft;
+    displayErrorOverdraft = localStorage.displayError;
+    getOverdraft();
+    changeStyle('info-4', 'fontSize', '1.1em');
+    document.getElementById('agios').innerHTML = localStorage.agios
+}
+console.log(localStorage.sold)
+console.log(localStorage.overdraft)
+console.log(localStorage.displayError)
 
 function getOverdraft() {
-    document.getElementById('amount-informations-p').innerHTML = "";
     let overdraft = overdraftInput.value;
-    if ((overdraft < 100 || overdraft > 2000) && displayErrorOverdraft) {
-        changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
-    }
     let initialAmount = soldInput.value;
-    if (initialAmount < 500) {
-        changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
+    if (localStorage.length == 0) {
+        document.getElementById('amount-informations-p').innerHTML = "";
+        if ((overdraft < 100 || overdraft > 2000) && displayErrorOverdraft) {
+            changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
+        }
+        if (initialAmount < 500) {
+            changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
+        }
     }
-
     if (document.getElementById('amount-informations-p').innerHTML != "") {
         return
     } else {
         document.getElementById('p-notifications').innerHTML = "";
-        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
-        changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>`);
+        if (localStorage.length == 0) {
+            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
+            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>`);
+        }
         soldValue.innerHTML = initialAmount;
-        if (displayErrorOverdraft) {
+        if (displayErrorOverdraft || localStorage.displayError) {
             overdraftValue.innerHTML = overdraft;
-            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
+            if (localStorage.length == 0) {
+                changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
+                document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+            }
             changeStyle('button-custom-agios', 'display', 'block');
-            document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
         } else {
             overdraftValue.innerHTML = 0;
         }
-        changeStyle('container-user', 'display', 'grid');
-        changeStyle('container-home', 'display', 'none');
-        setTimeout(() => {
-            changeStyle('container-user-informations', 'opacity', 1);
-            changeStyle('container-button', 'opacity', '1');
-        }, 100);
-        localStorage.sold = soldValue.innerHTML;
-        localStorage.overdraft = overdraftValue.innerHTML;
+        if (window.innerWidth < 1200) {
+            changeStyle('container-user', 'display', 'flex');
+            changeStyle('container-home', 'display', 'none');
+            setTimeout(() => {
+                changeStyle('container-user-informations', 'opacity', 1);
+                changeStyle('container-button', 'opacity', '1');
+            }, 100);
+        } else {
+            changeStyle('container-user', 'display', 'grid');
+            changeStyle('container-home', 'display', 'none');
+            setTimeout(() => {
+                changeStyle('container-user-informations', 'opacity', 1);
+                changeStyle('container-button', 'opacity', '1');
+            }, 100);
+        }
+        if (localStorage.length == 0) {
+            localStorage.sold = soldValue.innerHTML;
+            localStorage.overdraft = overdraftValue.innerHTML;
+            localStorage.displayError = displayErrorOverdraft;
+        }
     }
 }
 
@@ -110,6 +132,7 @@ function deposit() {
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
     }
     doc.value = "";
+    localStorage.sold = soldValue.innerHTML;
 }
 
 function withdraw() {
@@ -135,6 +158,7 @@ function withdraw() {
         changeStyle('button-custom-agios', 'display', 'block');
     }
     withdrawValue.innerHTML = hasWithdraw;
+    localStorage.sold = sold;
 }
 
 function askOverdraft() {
@@ -146,12 +170,13 @@ function askOverdraft() {
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Demande de découvert de ${value}€ autorisé.<br>`);
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
         overdraftValue.innerHTML = valueInner + value;
+        localStorage.overdraft = overdraftValue.innerHTML;
     }
 }
 
 function calculAgios() {
     let agiosInput = parseInt(document.getElementById('amount-informations-input-agios').value);
-    if (agiosInput < 1 || agiosInput > 365 || isNaN( agiosInput)) {
+    if (agiosInput < 1 || agiosInput > 365 || isNaN(agiosInput)) {
         changeStyle('amount-informations-p-error-agios', 'innerHTML', 'Le nombre de jours doit être compris entre 1 et 365');
     } else {
         agios(soldValue.innerHTML, agiosInput, false)
@@ -162,20 +187,23 @@ let time;
 function agios(sold, timeValue, askTime) {
     if (askTime) {
         time = parseInt(prompt("Solde négatif. Saisissez le nombre de jour d'utilisation du découvert"));
+    } else {
+        time = timeValue;
     }
-    while (time < 1 || time > 365 || isNaN(time)) {
+    while ((time < 1 || time > 365 || isNaN(time))) {
         time = parseInt(prompt("Le nombre de jours doit être compris entre 1 et 365"));
     }
     let interest;
-    if (timeValue != null){
+    if (timeValue != null) {
         interest = (-sold * timeValue * 0.1 / 365).toFixed(2)
     } else {
         interest = (-sold * time * 0.1 / 365).toFixed(2)
     }
     changeStyle('info-4', 'fontSize', '1.1em');
     document.getElementById('agios').innerHTML = interest;
-    document.getElementById('p-notifications').innerHTML += `${displayTime()}Vos agios sont de ${interest}€.<br>`;
+    changeStyle('p-notifications', 'innerHTML', `${displayTime()}Vos agios sont de ${interest}€.<br>`)
     document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+    localStorage.agios = interest;
 }
 
 function changeStyle(id, property, value) {

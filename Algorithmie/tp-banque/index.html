@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div class="container-home" id="container-home">
         <h1>Bienvenue chez GTM Bank</h1>
         <div class="button" id="button-open-account" onclick="openAccount()">
@@ -59,10 +60,16 @@
     <div class="container-user" id="container-user">
         <div class="container-users">
             <div id="container-user-informations">
+                <div id="container-user-logout" onclick="reload()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+                    </svg>
+                </div>
                 <div class="container-user-informations-title">
                     <h1>Mon compte</h1>
                     <span>N° 70952013956</span>
-                    <div id="notifications-line"></div>
+                    <div class="notifications-line" id="user-notifications-line"></div>
                 </div>
                 <div class="container-user-informations-infos" id="info-2">
                     <label class="user-info-label">Solde actuel : (€)</label>
@@ -82,18 +89,27 @@
                 </div>
             </div>
         </div>
+        <div class="container-button" id="container-button">
+            <button class="container-button-custom" onclick="displayOperations('deposit')">Dépôt</button>
+            <button class="container-button-custom" onclick="displayOperations('withdraw')">Retrait</button>
+            <button class="container-button-custom" onclick="displayOperations('overdraft')">Découvert</button>
+            <button class="container-button-custom" id="button-custom-agios"
+                onclick="displayOperations('agios')">Agios</button>
+        </div>
         <div class="container-operations" id="container-operations">
             <p class="background-word">GTM</p>
             <div id="container-operations-withdraw-informations" class="amount-informations">
                 <div class="amount-informations-flex">
                     <div class="amount-informations-div" id="deposit-informations-div">
-                        <h4 for="" id="deposit-informations-sold" class="amount-informations-title">Dépôt à effectuer
+                        <h4 for="" id="deposit-informations-sold" class="amount-informations-title">Dépôt à
+                            effectuer
                         </h4>
                         <input type="number" id="deposit-informations-input-sold-value"
                             class="amount-informations-input" placeholder="Ex : 500€">
                     </div>
                     <div class="amount-informations-div" id="withdraw-informations-div">
-                        <h4 for="" id="withdraw-informations-sold" class="amount-informations-title">Retrait à effectuer
+                        <h4 for="" id="withdraw-informations-sold" class="amount-informations-title">Retrait à
+                            effectuer
                         </h4>
                         <input type="number" id="withdraw-informations-input-sold-value"
                             class="amount-informations-input" placeholder="Ex : 500€">
@@ -132,7 +148,8 @@
             </div>
             <div class="amount-informations-div" id="amount-agios">
                 <div>
-                    <h4 for="" id="amount-informations-agios" class="amount-informations-title">Changer mon agios</h4>
+                    <h4 for="" id="amount-informations-agios" class="amount-informations-title">Changer mon agios
+                    </h4>
                     <input type="number" id="amount-informations-input-agios" class="amount-informations-input"
                         placeholder="Ex : 365 jours">
                 </div>
@@ -144,13 +161,6 @@
                     <a href="#">Calculer mon agios</a>
                 </div>
             </div>
-        </div>
-        <div class="container-button" id="container-button">
-            <button class="container-button-custom" onclick="displayOperations('deposit')">Dépôt</button>
-            <button class="container-button-custom" onclick="displayOperations('withdraw')">Retrait</button>
-            <button class="container-button-custom" onclick="displayOperations('overdraft')">Découvert</button>
-            <button class="container-button-custom" id="button-custom-agios"
-                onclick="displayOperations('agios')">Agios</button>
         </div>
         <div class="notifications" id="notifications" onclick="showNotifications()">
             <h3 id="notifications-title">Notifications</h3>

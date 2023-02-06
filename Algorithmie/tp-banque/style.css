@@ -49,6 +49,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 #container-home-fieldset {
     text-align: left;
     display: flex;
@@ -78,7 +79,7 @@ body {
 #amount-informations,
 #container-home-fieldset {
     opacity: 0;
-    transition: opacity 0.2s ease-out ;
+    transition: opacity 0.2s ease-out;
 }
 
 .amount-informations-div {
@@ -90,12 +91,13 @@ body {
 .container-user {
     border: none;
     display: none;
+    flex-direction: column;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     width: 75vw;
-    height: 800px;
+    height: 100vh;
     text-align: center;
 }
 
@@ -251,10 +253,9 @@ a {
     flex-direction: column;
     align-items: center;
 }
-/* 
-#withdraw-informations {
-    display: none;
-} */
+
+/*** Container User ***/
+
 .container-users {
     display: flex;
     flex-direction: column;
@@ -264,6 +265,7 @@ a {
 }
 
 #container-user-informations {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -274,6 +276,13 @@ a {
     opacity: 0;
     transition: all .7s ease-in-out;
     text-align: left;
+}
+
+#container-user-logout {
+    position: absolute;
+    width: 30px;
+    right: 20px;
+    top: 20px;
 }
 
 h1 {
@@ -301,7 +310,7 @@ h1 {
     transition: all .25s ease-out;
 }
 
-.container-user-informations-title > span {
+.container-user-informations-title>span {
     font-size: 0.9em;
 }
 
@@ -336,10 +345,9 @@ h1 {
 }
 
 .container-button-custom {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 50px;
     padding: 10px;
-    border-radius: 50%;
     border: 2px solid #cecece;
     background-color: #cecece25;
     color: #cecece;
@@ -382,7 +390,7 @@ h1 {
     margin: 5px 0 10px 0;
 }
 
-#notifications-line {
+.notifications-line {
     border: 1.5px solid #818181;
     border-radius: 10px;
     width: 100%;
@@ -401,7 +409,8 @@ h1 {
 .container,
 .amount-informations-input,
 #container-user-informations,
-.notifications {
+.notifications,
+.container-button-custom {
     border-radius: 12px;
 }
 
@@ -420,14 +429,42 @@ h1 {
         text-align: inherit;
     }
 
-    #container-user-informations {
-        margin-top: 0;
-        width: 50%;
-        grid-column-gap: 0px;
+    .amount-informations-flex {
+        margin-bottom: 0;
     }
 
-    .button {
-        margin-top: 0;
+    .amount-informations-title {
+        margin: 5px 0;
+    }
+
+    #svg-informations {
+        display: none;
+    }
+
+    #container-user {
+        justify-content: space-around;
+    }
+
+    .container-users {
+        height: 400px;
+    }
+
+    #user-notifications-line {
+        border: 1px solid #818181;
+    }
+
+    #container-user-informations {
+        width: 90%;
+        height: 100vh;
+    }
+
+    .container-button {
+        gap: 50px;
+        margin-top: 40px;
+    }
+
+    .background-word {
+        display: none;
     }
 
     .notifications-bell {
