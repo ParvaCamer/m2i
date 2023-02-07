@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <img src="./assets/icon.png" class="icon-image">
     <div class="container-home" id="container-home">
         <h1 id="container-title">Bienvenue chez GTM Bank</h1>
         <div class="button" id="button-open-account" onclick="openAccount()">
@@ -130,12 +131,16 @@
                 </div>
             </div>
             <div class="amount-informations-div" id="amount-overdraft">
-                <div>
+                <div class="amount-flex">
                     <h4 for="" id="amount-informations-ask-overdraft" class="amount-informations-title">Montant du
                         découvert
                         (entre 100€ et 2000€)</h4>
                     <input type="number" id="amount-informations-input-ask-overdraft" class="amount-informations-input"
                         placeholder="Ex : 1000€">
+                </div>
+                <div class="amount-informations-svg">
+                    <img id="svg-informations-none" class="svg-informations" src="./assets/arrow-up.png"
+                        alt="arrow-svg" />
                 </div>
                 <div class="amount-informations-error" id="amount-informations-ask-overdraft-error">
                     <p id="amount-informations-p-error" class="amount-informations-p"></p>
@@ -146,11 +151,15 @@
                 </div>
             </div>
             <div class="amount-informations-div" id="amount-agios">
-                <div>
+                <div class="amount-flex">
                     <h4 for="" id="amount-informations-agios" class="amount-informations-title">Changer mon agios
                     </h4>
                     <input type="number" id="amount-informations-input-agios" class="amount-informations-input"
                         placeholder="Ex : 365 jours">
+                </div>
+                <div class="amount-informations-svg">
+                    <img id="svg-informations-none" class="svg-informations" src="./assets/arrow-up.png"
+                        alt="arrow-svg" />
                 </div>
                 <div class="amount-informations-error" id="amount-informations-agios-error">
                     <p id="amount-informations-p-error-agios" class="amount-informations-p"></p>

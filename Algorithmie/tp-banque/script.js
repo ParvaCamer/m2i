@@ -78,18 +78,20 @@ try {
 function getOverdraft() {
     let overdraft = overdraftInput.value;
     let initialAmount = soldInput.value;
-    if (localStorage.length == 0) {
+    if (localStorage.length == 0 || localStorage.sold == "") {
         document.getElementById('amount-informations-p').innerHTML = "";
-        if ((overdraft < 100 || overdraft > 2000) && displayErrorOverdraft) {
+        if ((overdraft < 100 || overdraft > 2000) && document.getElementById('input-radio-yes').checked) {
             changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
         }
         if (initialAmount < 500) {
+            console.log('oui')
             changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
         }
     }
     if (document.getElementById('amount-informations-p').innerHTML != "") {
         return
     } else {
+        console.log(localStorage)
         document.getElementById('p-notifications').innerHTML = "";
         if (localStorage.length == 0) {
             changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
@@ -108,7 +110,8 @@ function getOverdraft() {
         } else {
             overdraftValue.innerHTML = 0;
         }
-        if (window.innerWidth < 1200) {
+        if (window.innerWidth < 1200 && initialAmount > 0) {
+            console.log('oui')
             changeStyle('container-user', 'display', 'flex');
             changeStyle('container-home', 'display', 'none');
             setTimeout(() => {
@@ -274,6 +277,9 @@ function displayOperations(value) {
         changeStyle('amount-overdraft', 'opacity', 0);
         changeStyle('amount-agios', 'display', 'none');
     } else if (value === 'overdraft') {
+        if (window.innerWidth < 1200 && hasShown) {
+            showNotifications()
+        }
         changeStyle('amount-overdraft', 'display', 'flex');
         changeStyle('amount-overdraft', 'opacity', 1);
         changeStyle('container-operations-withdraw-informations', 'display', 'none');
@@ -284,16 +290,25 @@ function displayOperations(value) {
         changeStyle('container-operations-withdraw-informations', 'display', 'none');
         changeStyle('amount-overdraft', 'display', 'none');
         changeStyle('amount-overdraft', 'opacity', 0);
+
+    } else if (value === 'hide') {
+        changeStyle('amount-agios', 'display', 'none');
+        changeStyle('amount-agios', 'opacity', 0);
+        changeStyle('container-operations-withdraw-informations', 'display', 'none');
+        changeStyle('amount-overdraft', 'display', 'none');
+        changeStyle('amount-overdraft', 'opacity', 0);
     }
 }
 
+let hasShown;
 function showNotifications() {
     let container = document.getElementById('notifications');
     let display = document.getElementById('container-notifications');
 
     if (window.innerWidth < 1200) {
-        container.style.transition = "all .25s ease-in-out"
+        container.style.transition = "all .25s ease-in-out";
         if (display.style.maxHeight > "0px") {
+            hasShown = false;
             document.getElementById('bell').style.display = "block";
             display.style.maxHeight = "0px";
             display.style.display = "block";
@@ -306,6 +321,7 @@ function showNotifications() {
             container.style.width = "25px";
             container.style.right = "10px";
         } else {
+            hasShown = true;
             document.getElementById('bell').style.display = "none";
             document.getElementById('notifications-title').style.display = "block";
             document.getElementById('notifications-line').style.display = "block";
@@ -316,6 +332,9 @@ function showNotifications() {
             container.style.flexDirection = "column";
             container.style.borderRadius = "12px";
             display.style.maxHeight = "90px";
+        }
+        if (hasShown) {
+            displayOperations('hide');
         }
     } else {
         if (display.style.maxHeight > "0px") {
