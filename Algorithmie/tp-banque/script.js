@@ -51,19 +51,25 @@ function reload() {
     localStorage.clear();
     window.location.reload();
 }
-console.log(localStorage)
 
-if (localStorage.length > 0) {
+try {
+    localStorage.debug = '';
     soldInput.value = localStorage.sold;
     overdraftInput.value = localStorage.overdraft;
     displayErrorOverdraft = localStorage.displayError;
-    getOverdraft();
-    changeStyle('info-4', 'fontSize', '1.1em');
-    document.getElementById('agios').innerHTML = localStorage.agios
+    if (soldInput.value != null && overdraftInput.value != null) {
+        getOverdraft();
+    }
+    if (localStorage.agios != null) {
+        changeStyle('info-4', 'fontSize', '1.1em');
+        document.getElementById('agios').innerHTML = localStorage.agios
+    }
+    console.log(localStorage)
+} catch (error) {
+    localStorage.clear();
+    console.log(error)
+    console.log(localStorage)
 }
-console.log(localStorage.sold)
-console.log(localStorage.overdraft)
-console.log(localStorage.displayError)
 
 function getOverdraft() {
     let overdraft = overdraftInput.value;
