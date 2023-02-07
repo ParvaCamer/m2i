@@ -65,7 +65,6 @@ try {
     if (soldInput.value != "") {
         getOverdraft();
         if (localStorage.agios > 0) {
-            console.log('oui')
             changeStyle('info-4', 'fontSize', '1.1em');
             document.getElementById('agios').innerHTML = localStorage.getItem('agios');
         }
@@ -105,7 +104,6 @@ function getOverdraft() {
             }
             if (localStorage.agios > 0) {
                 changeStyle('button-custom-agios', 'display', 'block');
-                console.log('aoaooa')
             }
         } else {
             overdraftValue.innerHTML = 0;
@@ -128,7 +126,6 @@ function getOverdraft() {
         localStorage.setItem('sold', soldValue.innerHTML);
         localStorage.setItem('overdraft', overdraftValue.innerHTML);
         localStorage.setItem('displayError', displayErrorOverdraft);
-        console.log(localStorage)
     }
 }
 
@@ -208,26 +205,21 @@ let time;
 function agios(sold, timeValue, askTime) {
     if (isNaN(+localStorage.time)) {
         time = 0
-        console.log('pas nombre, donc time = 0')
     }
-    console.log(time)
     if (askTime && localStorage.agios <= 0) {
         time = parseInt(prompt("Solde négatif. Saisissez le nombre de jour d'utilisation du découvert"));
     } else if (timeValue > 0) {
         time = timeValue;
     } else {
-        console.log(time)
+        console.log('nombre de jours : ', time)
     }
-    console.log(time)
-    console.log(+localStorage.time)
-    console.log(localStorage.agios)
-    /* while ((time < 1 || time > 365 || isNaN(time))) {
-        if (askTime && localStorage.agios <= 0) {
+    if ((time < 1 || time > 365 || isNaN(time))) {
+        if (askTime && localStorage.agios == undefined) {
             time = parseInt(prompt("Le nombre de jours doit être compris entre 1 et 365"));
         } else {
             time = +localStorage.time
         }
-    } */
+    }
     let interest;
     if (timeValue != null) {
         interest = (-sold * timeValue * 0.1 / 365).toFixed(2)
@@ -238,8 +230,8 @@ function agios(sold, timeValue, askTime) {
     document.getElementById('agios').innerHTML = interest;
     changeStyle('p-notifications', 'innerHTML', `${displayTime()}Vos agios sont de ${interest}€.<br>`)
     document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
-    /* localStorage.setItem('agios', interest);
-    localStorage.setItem('time', time); */
+    localStorage.setItem('agios', interest);
+    localStorage.setItem('time', time);
 }
 
 function changeStyle(id, property, value) {
