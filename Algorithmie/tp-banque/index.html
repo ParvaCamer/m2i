@@ -10,9 +10,8 @@
 </head>
 
 <body>
-
     <div class="container-home" id="container-home">
-        <h1>Bienvenue chez GTM Bank</h1>
+        <h1 id="container-title">Bienvenue chez GTM Bank</h1>
         <div class="button" id="button-open-account" onclick="openAccount()">
             <div class="underline"></div>
             <a id="button-open-account-a" href="#">Ouvrir un compte</a>
@@ -26,8 +25,8 @@
                     <label for="input-radio-yes">Oui</label>
                 </div>
                 <div>
-                    <input type="radio" class="input-radio" id="input-radio-no" value="no" checked
-                        onclick="switchInputRadio(false)">
+                    <input type="radio" class="input-radio" id="input-radio-no" value="no"
+                        onclick="switchInputRadio(false)" checked>
                     <label for="input-radio-no">Non</label>
                 </div>
             </fieldset>
@@ -164,7 +163,7 @@
         </div>
         <div class="notifications" id="notifications" onclick="showNotifications()">
             <h3 id="notifications-title">Notifications</h3>
-            <div id="notifications-line"></div>
+            <div class="notifications-line" id="notifications-line"></div>
             <div id="container-notifications">
                 <p id="p-notifications">Pas de notifications</p>
             </div>

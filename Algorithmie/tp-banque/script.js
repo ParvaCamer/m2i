@@ -27,6 +27,10 @@ function openAccount() {
     changeStyle('amount-informations', 'opacity', 1);
     changeStyle('informations-sold', 'display', 'block');
     changeStyle('informations-sold', 'opacity', 1);
+    if (window.innerWidth < 1200) {
+        changeStyle('button-open-account', 'display', 'none');
+        changeStyle('container-title', 'display', 'none');
+    }
 }
 
 let displayErrorOverdraft = false;
@@ -53,22 +57,23 @@ function reload() {
 }
 
 try {
-    localStorage.debug = '';
-    soldInput.value = localStorage.sold;
-    overdraftInput.value = localStorage.overdraft;
-    displayErrorOverdraft = localStorage.displayError;
-    if (soldInput.value != null && overdraftInput.value != null) {
-        getOverdraft();
+    soldInput.value = localStorage.getItem('sold');
+    overdraftInput.value = localStorage.getItem('overdraft');
+    if (localStorage.getItem('displayError') != null) {
+        displayErrorOverdraft = localStorage.getItem('displayError');
     }
-    if (localStorage.agios != null) {
-        changeStyle('info-4', 'fontSize', '1.1em');
-        document.getElementById('agios').innerHTML = localStorage.agios
+    if (soldInput.value != "") {
+        getOverdraft();
+        if (localStorage.agios > 0) {
+            console.log('oui')
+            changeStyle('info-4', 'fontSize', '1.1em');
+            document.getElementById('agios').innerHTML = localStorage.getItem('agios');
+        }
     }
     console.log(localStorage)
 } catch (error) {
     localStorage.clear();
     console.log(error)
-    console.log(localStorage)
 }
 
 function getOverdraft() {
@@ -98,7 +103,10 @@ function getOverdraft() {
                 changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
                 document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
             }
-            changeStyle('button-custom-agios', 'display', 'block');
+            if (localStorage.agios > 0) {
+                changeStyle('button-custom-agios', 'display', 'block');
+                console.log('aoaooa')
+            }
         } else {
             overdraftValue.innerHTML = 0;
         }
@@ -117,16 +125,16 @@ function getOverdraft() {
                 changeStyle('container-button', 'opacity', '1');
             }, 100);
         }
-        if (localStorage.length == 0) {
-            localStorage.sold = soldValue.innerHTML;
-            localStorage.overdraft = overdraftValue.innerHTML;
-            localStorage.displayError = displayErrorOverdraft;
-        }
+        localStorage.setItem('sold', soldValue.innerHTML);
+        localStorage.setItem('overdraft', overdraftValue.innerHTML);
+        localStorage.setItem('displayError', displayErrorOverdraft);
+        console.log(localStorage)
     }
 }
 
 let runAgios = true;
 function deposit() {
+    document.getElementById('amount-informations-p-e').innerHTML = "";
     let doc = document.getElementById('deposit-informations-input-sold-value');
     let value = parseInt(doc.value);
     if (value < 0 || isNaN(value)) {
@@ -142,10 +150,15 @@ function deposit() {
 }
 
 function withdraw() {
+    document.getElementById('amount-informations-p-e').innerHTML = "";
     hasWithdraw = +hasWithdraw;
     let overdraft = +overdraftValue.innerHTML;
     let sold = +soldValue.innerHTML;
     let withdraw = +withdrawInput.value;
+    if (isNaN(withdraw) || withdraw <= 0) {
+        changeStyle('amount-informations-p-e', 'innerHTML', 'Veuillez saisir un montant correct !');
+        return
+    }
     if (sold + overdraft >= withdraw) {
         sold -= withdraw;
         hasWithdraw += withdraw;
@@ -164,23 +177,25 @@ function withdraw() {
         changeStyle('button-custom-agios', 'display', 'block');
     }
     withdrawValue.innerHTML = hasWithdraw;
-    localStorage.sold = sold;
+    localStorage.setItem('sold', sold);
+
 }
 
 function askOverdraft() {
+    document.getElementById('amount-informations-p-error').innerHTML = "";
     let value = parseInt(document.getElementById('amount-informations-input-ask-overdraft').value);
-    let valueInner = +overdraftValue.innerHTML;
-    if (value < 100 || value > 2000) {
+    if (value < 100 || value > 2000 || isNaN(value)) {
         changeStyle('amount-informations-p-error', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
     } else {
         changeStyle('p-notifications', 'innerHTML', `${displayTime()}Demande de découvert de ${value}€ autorisé.<br>`);
         document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
-        overdraftValue.innerHTML = valueInner + value;
+        overdraftValue.innerHTML = value;
         localStorage.overdraft = overdraftValue.innerHTML;
     }
 }
 
 function calculAgios() {
+    document.getElementById('amount-informations-p-error-agios').innerHTML = "";
     let agiosInput = parseInt(document.getElementById('amount-informations-input-agios').value);
     if (agiosInput < 1 || agiosInput > 365 || isNaN(agiosInput)) {
         changeStyle('amount-informations-p-error-agios', 'innerHTML', 'Le nombre de jours doit être compris entre 1 et 365');
@@ -191,14 +206,28 @@ function calculAgios() {
 
 let time;
 function agios(sold, timeValue, askTime) {
-    if (askTime) {
+    if (isNaN(+localStorage.time)) {
+        time = 0
+        console.log('pas nombre, donc time = 0')
+    }
+    console.log(time)
+    if (askTime && localStorage.agios <= 0) {
         time = parseInt(prompt("Solde négatif. Saisissez le nombre de jour d'utilisation du découvert"));
-    } else {
+    } else if (timeValue > 0) {
         time = timeValue;
+    } else {
+        console.log(time)
     }
-    while ((time < 1 || time > 365 || isNaN(time))) {
-        time = parseInt(prompt("Le nombre de jours doit être compris entre 1 et 365"));
-    }
+    console.log(time)
+    console.log(+localStorage.time)
+    console.log(localStorage.agios)
+    /* while ((time < 1 || time > 365 || isNaN(time))) {
+        if (askTime && localStorage.agios <= 0) {
+            time = parseInt(prompt("Le nombre de jours doit être compris entre 1 et 365"));
+        } else {
+            time = +localStorage.time
+        }
+    } */
     let interest;
     if (timeValue != null) {
         interest = (-sold * timeValue * 0.1 / 365).toFixed(2)
@@ -209,7 +238,8 @@ function agios(sold, timeValue, askTime) {
     document.getElementById('agios').innerHTML = interest;
     changeStyle('p-notifications', 'innerHTML', `${displayTime()}Vos agios sont de ${interest}€.<br>`)
     document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
-    localStorage.agios = interest;
+    /* localStorage.setItem('agios', interest);
+    localStorage.setItem('time', time); */
 }
 
 function changeStyle(id, property, value) {
@@ -221,6 +251,8 @@ function changeStyle(id, property, value) {
 }
 
 function displayOperations(value) {
+    document.getElementById('amount-informations-p-error').innerHTML = "";
+    document.getElementById('amount-informations-p-error-agios').innerHTML = "";
     document.getElementById('amount-informations-p-e').innerHTML = "";
     document.getElementById('withdraw-informations-input-sold-value').value = "";
     document.getElementById('deposit-informations-input-sold-value').value = "";
@@ -285,7 +317,7 @@ function showNotifications() {
             document.getElementById('bell').style.display = "none";
             document.getElementById('notifications-title').style.display = "block";
             document.getElementById('notifications-line').style.display = "block";
-            container.style.width = "50%";
+            container.style.width = "auto";
             container.style.height = "auto";
             container.style.right = 0;
             container.style.position = "relative";
@@ -299,7 +331,7 @@ function showNotifications() {
         } else {
             display.style.maxHeight = "200px";
         }
-        container.style.bottom = "-25px";
+        container.style.bottom = "-23px";
     }
 }
 
