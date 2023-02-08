@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 id="main-title">Manipulation du DOM</h1>
+    <div class="container-flex">
+        <div class="container" id="first-container">
+            <h2>Contenu principal</h2>
+            <p id="para-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati magnam, aperiam
+                quas in, nulla id
+                fugiat provident vel laboriosam voluptatibus quae eligendi dolorum aliquid quos quam, cupiditate odit
+                excepturi.
+                Aspernatur minima expedita quod. Eveniet error sint, maiores impedit magnam voluptatem dolores
+                laboriosam
+                minus explicabo quis nobis exercitationem non vero rem natus expedita soluta dolor veritatis asperiores
+                neque. Dolor, consequatur!
+                Natus molestias voluptate impedit! Quos eligendi nostrum dolorem, eos recusandae doloremque fuga iste,
+                asperiores repellat deleniti libero, debitis ea nulla facilis cumque! Ab omnis odit saepe deleniti
+                laborum
+                iure dolorum!
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi nulla vitae ipsum, eum inventore officia
+                repudiandae quos distinctio molestiae dolor dolores ullam dolorum doloribus, temporibus sapiente ut
+                voluptas
+                voluptate fuga?Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, qui nisi! Ex natus
+                cupiditate optio nisi cum consectetur earum eaque, reiciendis distinctio, molestias adipisci sequi
+                reprehenderit ad magnam laudantium sit?Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Provident
+                impedit maxime eligendi quod, corporis sapiente eius porro eum aliquid a cumque ratione necessitatibus
+                itaque sed velit distinctio excepturi, praesentium laborum.</p>
+            <p id="title-image">Image d'un bureau avec un ordinateur</p>
+            <img alt="photo-bureau" src="./assets/office-925806_1920.jpg" />
+        </div>
+        <div class="container" id="second-container">
+            <h2>Panneau de configuration</h2>
+            <div>
+                <label for="color-background">Changer la couleur de fond</label>
+                <input type="color" name="color-background" id="color-background"
+                    onclick="sendValue('color', 'color-background')">
+            </div>
+            <div>
+                <label for="color-title">Changer la couleur du titre</label>
+                <input type="color" name="color-title" id="color-title" onclick="sendValue('color', 'color-title')">
+            </div>
+            <div>
+                <label for="color-text">Changer la couleur du texte</label>
+                <input type="color" name="color-text" id="color-text" onclick="sendValue('color', 'color-text')">
+            </div>
+            <div>
+                <label for="container">Saisir du contenu</label>
+                <textarea name="container" id="textarea"
+                    placeholder="Saisissez votre contenu à ajouter à la place du contenu principal"></textarea>
+            </div>
+            <div>
+                <label for="size-title">Saisir la taille du titre</label>
+                <input type="number" name="size-title" placeholder="Taille du titre entre 36 et 72 px" id="size-title"
+                    onclick="sendValue('number', 'size-title')">
+            </div>
+            <div>
+                <label for="size-text">Saisir la taille du texte</label>
+                <input type="number" name="size-text" placeholder="Taille du texte entre 12 et 36 px" id="size-text"
+                    onclick="sendValue('number', 'size-text')">
+            </div>
+            <div>
+                <label for="align-title">Alignement du titre</label>
+                <select name="align-title" id="align-title">
+                    <option value="">Choisir l'allignement du titre</option>
+                    <option value="droite">Droite</option>
+                    <option value="gauche">Gauche</option>
+                    <option value="centré">Centré</option>
+                    <option value="justifié">Justifié</option>
+                </select>
+            </div>
+            <div>
+                <label for="align-text">Alignement du texte</label>
+                <select name="align-text" id="align-text">
+                    <option value="">Choisir l'alignement pour le texte</option>
+                    <option value="droite">Droite</option>
+                    <option value="gauche">Gauche</option>
+                    <option value="centré">Centré</option>
+                    <option value="justifié">Justifié</option>
+                </select>
+            </div>
+            <div>
+                <label for="font-title">Police titre</label>
+                <select name="font-title" id="font-title">
+                    <option value="">Choisir une font pour le titre</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
+            <div>
+                <label for="font-text">Police texte</label>
+                <select name="font-text" id="font-text">
+                    <option value="">Choisir une font pour le texte</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="div-flex">
+                <input type="text" placeholder="source image local ou URL" id="input-image">
+                <button class="button" id="button">Changer la photo</button>
+            </div>
+            <div>
+                <label for="resize">Agrandir/rétrécir l'ensemble</label>
+                <button>A+</button>
+                <button>A-</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
