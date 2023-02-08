@@ -228,7 +228,8 @@ a {
 #button-withdraw,
 #button-deposit,
 #button-open-account,
-#button-ask-overdraft {
+#button-ask-overdraft,
+#button-connect-account {
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -238,7 +239,8 @@ a {
 #button-withdraw a,
 #button-deposit a,
 #button-open-account a,
-#button-ask-overdraft a {
+#button-ask-overdraft a,
+#button-connect-account a {
     position: relative;
     transition: all .45s ease-Out;
 }
@@ -259,7 +261,8 @@ a {
 #button-withdraw:hover .underline,
 #button-deposit:hover .underline,
 #button-open-account:hover .underline,
-#button-ask-overdraft:hover .underline {
+#button-ask-overdraft:hover .underline,
+#button-connect-account:hover .underline {
     left: 0;
 }
 
@@ -461,20 +464,35 @@ h1 {
     }
 
     .amount-flex {
-        margin: 20px 0;
+        margin: 10px 0;
     }
 
     .amount-informations-flex {
-        margin: 20px 0;
+        margin: 10px 0;
         flex-direction: column;
     }
 
     .amount-informations-title {
-        margin: 5px 0;
+        margin: 0 0 5px 0;
+        font-size: .9em;
+    }
+
+    .amount-informations-p {
+        font-size: 0.9em;
     }
 
     #amount-informations-p {
         margin-top: 20px;
+    }
+
+    #container-operations-error,
+    #amount-informations-ask-overdraft-error,
+    #amount-informations-agios-error {
+        height: 40px;
+    }
+
+    .svg-informations {
+        height: 40px;
     }
 
     #amount-overdraft,
@@ -528,10 +546,14 @@ h1 {
         right: 10px;
     }
 
+    #notifications-title {
+        font-size: 1.2em;
+        margin: 0;
+    }
+
     #notifications-title,
     #notifications-line {
         display: none;
-        font-size: 1.4em;
     }
 
     #p-notifications {
