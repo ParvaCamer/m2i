@@ -1,8 +1,14 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300&display=swap');
+ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;800&display=swap');
+
 html {
     height: 100%;
 }
 
 body {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
     height: 100%;
     margin: 0;
 
@@ -52,6 +58,48 @@ body {
 
 .container-home-design {
     grid-area: 1 / 1 / 2 / 2;
+    position: relative;
+    padding: 50px;
+    width: 650px;
+}
+
+.container-home-design>h1 {
+    margin: 50px 0;
+    width: 70%;
+    user-select: none;
+}
+
+.container-home-span {
+    font-weight: 900;
+    font-size: 1.2em;
+}
+
+.container-home-design>h2 {
+    font-size: 1.5em;
+    width: 70%;
+    user-select: none;
+}
+
+.container-home-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-10%);
+    display: flex;
+    z-index: 2;
+}
+
+.container-home-design-img {
+    position: absolute;
+    bottom: 0;
+    left: -50px;
+    width: 400px;
+    z-index: 2;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .container-design-svg {
@@ -63,17 +111,24 @@ body {
 #blobSvg {
     position: relative;
     display: inline-block;
-    bottom: 800px;
+    bottom: 400px;
     right: 100px;
     width: 250%;
 }
 
 .container-image-background {
     position: absolute;
-    height: 650px;
-    right: -100px;
-    bottom: -55px;
+    right: 0;
+    bottom: 0;
     opacity: .8;
+    width: 100%;
+    max-width: 550px;
+    overflow: hidden;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 #button-open-account {
@@ -229,9 +284,9 @@ body {
 .button {
     display: inline-flex;
     height: 90px;
-    width: 250px;
+    width: 240px;
     border: 2px solid #BFC0C0;
-    margin: 20px 20px 20px 20px;
+    margin: 20px;
     color: #BFC0C0;
     text-transform: uppercase;
     text-decoration: none;
@@ -241,11 +296,6 @@ body {
     justify-content: center;
     overflow: hidden;
 }
-
-/* #button-withdraw,
-#withdraw-informations-div {
-    display: none;
-} */
 
 a {
     color: #BFC0C0;

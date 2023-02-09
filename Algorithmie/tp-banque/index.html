@@ -14,53 +14,60 @@
     <img src="./assets/icon.png" class="icon-image">
     <div class="container-home" id="container-home">
         <div class="container-home-design">
-            <h1 id="container-title">Bienvenue chez GTM Bank</h1>
-            <div class="button" id="button-connect-account" onclick="connectToAccount()">
-                <div class="underline"></div>
-                <a id="button-connect-account-a" href="#">Me connecter</a>
+            <h1 id="container-home-title"><span class="container-home-span">- GTM Bank -</span> Votre partenaire
+                financier
+                privilégié !</h1>
+            <h2>Des solutions financières élégantes pour les clients les plus distingués.</h2>
+            <div class="container-home-button">
+                <div class="button" id="button-connect-account" onclick="connectToAccount()">
+                    <div class="underline"></div>
+                    <a id="button-connect-account-a" href="#">Me connecter</a>
+                </div>
+                <div class="button" id="button-open-account" onclick="openAccount()">
+                    <div class="underline"></div>
+                    <a id="button-open-account-a" href="#">Devenir client</a>
+                </div>
             </div>
-            <div class="button" id="button-open-account" onclick="openAccount()">
-                <div class="underline"></div>
-                <a id="button-open-account-a" href="#">Devenir client</a>
-            </div>
-            <div id="display-open-account">
-                <fieldset id="container-home-fieldset">
-                    <legend>Voulez-vous un découvert ?</legend>
-                    <div>
-                        <input type="radio" class="input-radio" id="input-radio-yes" value="yes"
-                            onclick="switchInputRadio(true)">
-                        <label for="input-radio-yes">Oui</label>
+            <img alt="men from behind" class="container-home-design-img"
+                src="./assets/Parva_a_man_in_the_foreground_seen_from_his_right_side_at_about_f90184ee-a84b-429c-8dd6-b84b5969a645-removebg-preview.png">
+        </div>
+        <div id="display-open-account">
+            <fieldset id="container-home-fieldset">
+                <legend>Voulez-vous un découvert ?</legend>
+                <div>
+                    <input type="radio" class="input-radio" id="input-radio-yes" value="yes"
+                        onclick="switchInputRadio(true)">
+                    <label for="input-radio-yes">Oui</label>
+                </div>
+                <div>
+                    <input type="radio" class="input-radio" id="input-radio-no" value="no"
+                        onclick="switchInputRadio(false)" checked>
+                    <label for="input-radio-no">Non</label>
+                </div>
+            </fieldset>
+            <div id="amount-informations" class="amount-informations">
+                <div class="amount-informations-flex">
+                    <div class="amount-informations-div" id="informations-sold">
+                        <h4 for="" id="amount-informations-sold" class="amount-informations-title">Montant à
+                            transférer
+                            (500€ minimum)</h4>
+                        <input type="number" id="amount-informations-input-sold-value" class="amount-informations-input"
+                            placeholder="Ex : 500€">
                     </div>
-                    <div>
-                        <input type="radio" class="input-radio" id="input-radio-no" value="no"
-                            onclick="switchInputRadio(false)" checked>
-                        <label for="input-radio-no">Non</label>
+                    <div class="amount-informations-div" id="informations-overdraft">
+                        <h4 for="" id="amount-informations-overdraft" class="amount-informations-title">Montant du
+                            découvert
+                            (entre 100€ et 2000€)</h4>
+                        <input type="number" id="amount-informations-input-overdraft" class="amount-informations-input"
+                            placeholder="Ex : 1000€">
                     </div>
-                </fieldset>
-                <div id="amount-informations" class="amount-informations">
-                    <div class="amount-informations-flex">
-                        <div class="amount-informations-div" id="informations-sold">
-                            <h4 for="" id="amount-informations-sold" class="amount-informations-title">Montant à
-                                transférer
-                                (500€ minimum)</h4>
-                            <input type="number" id="amount-informations-input-sold-value"
-                                class="amount-informations-input" placeholder="Ex : 500€">
-                        </div>
-                        <div class="amount-informations-div" id="informations-overdraft">
-                            <h4 for="" id="amount-informations-overdraft" class="amount-informations-title">Montant du
-                                découvert
-                                (entre 100€ et 2000€)</h4>
-                            <input type="number" id="amount-informations-input-overdraft"
-                                class="amount-informations-input" placeholder="Ex : 1000€">
-                        </div>
-                    </div>
-                    <div class="amount-informations-error">
-                        <p id="amount-informations-p" class="amount-informations-p"></p>
-                    </div>
-                    <div class="button" id="button-overdraft" onclick="getOverdraft()">
-                        <div class="underline"></div>
-                        <a href="#">Ouvrir mon compte</a>
-                    </div>
+                </div>
+                <div class="amount-informations-error">
+                    <p id="amount-informations-p" class="amount-informations-p"></p>
+                </div>
+                <div class="button" id="button-overdraft" onclick="getOverdraft()">
+                    <div class="underline"></div>
+                    <a href="#">Ouvrir mon compte</a>
                 </div>
             </div>
         </div>
@@ -79,9 +86,8 @@
                     </animate>
                 </path>
             </svg>
-            <img src="./assets/bank-removebg.png" class="container-image-background">
+            <img alt="bank-image" src="./assets/bank-removebg.png" class="container-image-background">
         </div>
-    </div>
     </div>
     <div class="container-user" id="container-user">
         <div class="container-users">

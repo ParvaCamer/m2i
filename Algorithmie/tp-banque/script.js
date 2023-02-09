@@ -30,7 +30,7 @@ function openAccount() {
     changeStyle('informations-sold', 'opacity', 1);
     if (window.innerWidth < 1200) {
         changeStyle('button-open-account', 'display', 'none');
-        changeStyle('container-title', 'display', 'none');
+        changeStyle('container-home-title', 'display', 'none');
     }
 }
 
