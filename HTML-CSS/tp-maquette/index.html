@@ -13,7 +13,7 @@
     <h1 id="main-title">Manipulation du DOM</h1>
     <div class="container-flex">
         <div class="container" id="first-container">
-            <h2>Contenu principal</h2>
+            <h2 id="para-title">Contenu principal</h2>
             <p id="para-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati magnam, aperiam
                 quas in, nulla id
                 fugiat provident vel laboriosam voluptatibus quae eligendi dolorum aliquid quos quam, cupiditate odit
@@ -36,7 +36,7 @@
                 impedit maxime eligendi quod, corporis sapiente eius porro eum aliquid a cumque ratione necessitatibus
                 itaque sed velit distinctio excepturi, praesentium laborum.</p>
             <p id="title-image">Image d'un bureau avec un ordinateur</p>
-            <img alt="photo-bureau" src="./assets/office-925806_1920.jpg" />
+            <img id="picture" alt="photo-bureau" src="./assets/office-925806_1920.jpg" />
         </div>
         <div class="container" id="second-container">
             <h2>Panneau de configuration</h2>
@@ -55,7 +55,7 @@
             </div>
             <div>
                 <label for="container">Saisir du contenu</label>
-                <textarea name="container" id="textarea"
+                <textarea name="container" id="textarea" onkeyup="sendValue('write-text')"
                     placeholder="Saisissez votre contenu à ajouter à la place du contenu principal"></textarea>
             </div>
             <div>
@@ -70,50 +70,50 @@
             </div>
             <div>
                 <label for="align-title">Alignement du titre</label>
-                <select name="align-title" id="align-title">
+                <select name="align-title" id="align-title" onclick="sendValue('align', 'align-title')">
                     <option value="">Choisir l'allignement du titre</option>
-                    <option value="droite">Droite</option>
-                    <option value="gauche">Gauche</option>
-                    <option value="centré">Centré</option>
-                    <option value="justifié">Justifié</option>
+                    <option value="right">Droite</option>
+                    <option value="left">Gauche</option>
+                    <option value="center">Centré</option>
+                    <option value="justify">Justifié</option>
                 </select>
             </div>
             <div>
                 <label for="align-text">Alignement du texte</label>
-                <select name="align-text" id="align-text">
+                <select name="align-text" id="align-text" onclick="sendValue('align', 'align-text')">
                     <option value="">Choisir l'alignement pour le texte</option>
-                    <option value="droite">Droite</option>
-                    <option value="gauche">Gauche</option>
-                    <option value="centré">Centré</option>
-                    <option value="justifié">Justifié</option>
+                    <option value="right">Droite</option>
+                    <option value="left">Gauche</option>
+                    <option value="center">Centré</option>
+                    <option value="justify">Justifié</option>
                 </select>
             </div>
             <div>
                 <label for="font-title">Police titre</label>
-                <select name="font-title" id="font-title">
+                <select name="font-title" id="font-title" onclick="sendValue('font', 'font-title')">
                     <option value="">Choisir une font pour le titre</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                    <option value="monospace">Monospace</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Courier New">Courier New</option>
                 </select>
             </div>
             <div>
                 <label for="font-text">Police texte</label>
-                <select name="font-text" id="font-text">
+                <select name="font-text" id="font-text" onclick="sendValue('font', 'font-text')">
                     <option value="">Choisir une font pour le texte</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                    <option value="monospace">Monospace</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Courier New">Courier New</option>
                 </select>
             </div>
             <div class="div-flex">
                 <input type="text" placeholder="source image local ou URL" id="input-image">
-                <button class="button" id="button">Changer la photo</button>
+                <button class="button" id="button" onclick="sendValue('url')">Changer la photo</button>
             </div>
             <div>
                 <label for="resize">Agrandir/rétrécir l'ensemble</label>
-                <button>A+</button>
-                <button>A-</button>
+                <button onclick="sendValue('resize', 1)">A+</button>
+                <button onclick="sendValue('resize', -1)">A-</button>
             </div>
         </div>
     </div>
