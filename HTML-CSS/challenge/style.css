@@ -1,0 +1,37 @@
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-grid {
+    border: 1px solid black;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#finale {
+    width: 10%;
+    background-color: lightblue;
+}
+
+#demi {
+    width: 25%;
+    background-color: yellow;
+}
+
+#quart {
+    width: 60%;
+    background-color: purple;
+}
+
+#huitième {
+    width: 90%;
+    background-color: red;
+}
