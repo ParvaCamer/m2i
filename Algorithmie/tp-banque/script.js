@@ -1,7 +1,9 @@
+let nameInput = document.getElementById('amount-informations-input-name-value');
 let soldInput = document.getElementById('amount-informations-input-sold-value');
 let overdraftInput = document.getElementById('amount-informations-input-overdraft');
 let withdrawInput = document.getElementById('withdraw-informations-input-sold-value');
 
+let nameValue = document.getElementById('container-user-name');
 let overdraftValue = document.getElementById('overdraft');
 let soldValue = document.getElementById('sold');
 let withdrawValue = document.getElementById('withdraw');
@@ -19,35 +21,30 @@ inputs.forEach(input => {
 });
 
 function openAccount() {
+    changeStyle('container-home-button', 'display', 'none');
     changeStyle('display-open-account', 'display', 'flex');
-    changeStyle('button-open-account', 'opacity', '0');
-    changeStyle('button-open-account', 'cursor', 'default');
-    changeStyle('button-open-account-a', 'cursor', 'default');
-    changeStyle('button-connect-account', 'display', 'none');
-    changeStyle('container-home-fieldset', 'opacity', 1);
-    changeStyle('amount-informations', 'opacity', 1);
-    changeStyle('informations-sold', 'display', 'block');
-    changeStyle('informations-sold', 'opacity', 1);
-    if (window.innerWidth < 1200) {
-        changeStyle('button-open-account', 'display', 'none');
+    changeStyle('container-home-title', 'opacity', '0');
+    changeStyle('container-home-title-h2', 'opacity', '0');
+    let img = document.getElementById('design-img');
+    img.classList.add('stop')
+    /* if (window.innerWidth < 1200) {
         changeStyle('container-home-title', 'display', 'none');
-    }
+    } */
 }
-
 let displayErrorOverdraft = false;
 function switchInputRadio(value) {
     if (value) {
         displayErrorOverdraft = value;
-        changeStyle('informations-overdraft', 'display', 'block');
+        changeStyle('informations-overdraft', 'display', 'flex');
         setTimeout(() => {
             changeStyle('informations-overdraft', 'opacity', 1);
         }, 300);
     } else {
         displayErrorOverdraft = value;
+        changeStyle('informations-overdraft', 'opacity', 0);
         setTimeout(() => {
-            changeStyle('informations-overdraft', 'opacity', 0);
+            changeStyle('informations-overdraft', 'display', 'none');
         }, 500);
-        changeStyle('informations-overdraft', 'display', 'none');
     }
     return value
 }
@@ -59,6 +56,7 @@ function reload() {
 
 function connectToAccount() {
     try {
+        nameInput.value = localStorage.getItem('name');
         soldInput.value = localStorage.getItem('sold');
         overdraftInput.value = localStorage.getItem('overdraft');
         if (localStorage.getItem('displayError') != null) {
@@ -82,58 +80,66 @@ function connectToAccount() {
 }
 
 function getOverdraft() {
+    console.log(nameInput.value)
     localStorage.clear();
-    let overdraft = overdraftInput.value;
-    let initialAmount = soldInput.value;
-    if (localStorage.length == 0 || localStorage.sold == "") {
-        document.getElementById('amount-informations-p').innerHTML = "";
-        if ((overdraft < 100 || overdraft > 2000) && document.getElementById('input-radio-yes').checked) {
-            changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
+    setTimeout(() => {
+        let overdraft = overdraftInput.value;
+        let initialAmount = soldInput.value;
+        if (localStorage.length == 0 || localStorage.sold == "") {
+            document.getElementById('amount-informations-p').innerHTML = "";
+            if ((overdraft < 100 || overdraft > 2000) && document.getElementById('input-radio-yes').checked) {
+                changeStyle('amount-informations-p', 'innerHTML', 'Le montant du découvert doit être compris entre 100 et 2000 €, veuillez entrer une valeur valide.<br>')
+            }
+            if (initialAmount < 500) {
+                changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
+            }
         }
-        if (initialAmount < 500) {
-            changeStyle('amount-informations-p', 'innerHTML', 'Le montant initial doit être au minimum de 500 €, veuillez entrer une valeur valide.<br>');
-        }
-    }
-    if (document.getElementById('amount-informations-p').innerHTML != "") {
-        return
-    } else {
-        document.getElementById('p-notifications').innerHTML = "";
-        if (localStorage.length <= 1) {
-            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
-            changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>`);
-        }
-        soldValue.innerHTML = initialAmount;
-        if (displayErrorOverdraft || localStorage.displayError) {
-            overdraftValue.innerHTML = overdraft;
+        if (document.getElementById('amount-informations-p').innerHTML != "") {
+            return
+        } else {
+            document.getElementById('p-notifications').innerHTML = "";
             if (localStorage.length <= 1) {
-                changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
-                document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+                changeStyle('p-notifications', 'innerHTML', `${displayTime()}Bienvenue chez nous !<br>`);
+                changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre solde est de ${initialAmount}€.<br>`);
             }
-            if (localStorage.agios > 0) {
-                changeStyle('button-custom-agios', 'display', 'block');
+            soldValue.innerHTML = initialAmount;
+            nameValue.innerHTML = nameInput.value;
+            if (displayErrorOverdraft || localStorage.displayError) {
+                overdraftValue.innerHTML = overdraft;
+                if (localStorage.length <= 1) {
+                    changeStyle('p-notifications', 'innerHTML', `${displayTime()}Votre découvert est de ${overdraft}€.<br>`);
+                    document.getElementById('container-notifications').scrollTop = document.getElementById('container-notifications').scrollHeight;
+                }
+                if (localStorage.agios > 0) {
+                    changeStyle('button-custom-agios', 'display', 'block');
+                }
+            } else {
+                overdraftValue.innerHTML = 0;
             }
-        } else {
-            overdraftValue.innerHTML = 0;
+            if (window.innerWidth < 1200 && initialAmount > 0) {
+                changeStyle('container-user', 'display', 'flex');
+                changeStyle('container-home', 'display', 'none');
+                setTimeout(() => {
+                    changeStyle('container-user-informations', 'opacity', 1);
+                    changeStyle('container-button', 'opacity', '1');
+                }, 100);
+            } else {
+                changeStyle('container-user', 'display', 'grid');
+                changeStyle('container-home', 'display', 'none');
+                changeStyle('amount-overdraft', 'display', 'none');
+                changeStyle('amount-overdraft', 'display', 'none');
+                changeStyle('amount-agios', 'display', 'none');
+                setTimeout(() => {
+                    changeStyle('container-user-informations', 'opacity', 1);
+                    changeStyle('container-button', 'opacity', '1');
+                }, 100);
+            }
+            localStorage.setItem('name', nameInput.value);
+            localStorage.setItem('sold', soldValue.innerHTML);
+            localStorage.setItem('overdraft', overdraftValue.innerHTML);
+            localStorage.setItem('displayError', displayErrorOverdraft);
         }
-        if (window.innerWidth < 1200 && initialAmount > 0) {
-            changeStyle('container-user', 'display', 'flex');
-            changeStyle('container-home', 'display', 'none');
-            setTimeout(() => {
-                changeStyle('container-user-informations', 'opacity', 1);
-                changeStyle('container-button', 'opacity', '1');
-            }, 100);
-        } else {
-            changeStyle('container-user', 'display', 'grid');
-            changeStyle('container-home', 'display', 'none');
-            setTimeout(() => {
-                changeStyle('container-user-informations', 'opacity', 1);
-                changeStyle('container-button', 'opacity', '1');
-            }, 100);
-        }
-        localStorage.setItem('sold', soldValue.innerHTML);
-        localStorage.setItem('overdraft', overdraftValue.innerHTML);
-        localStorage.setItem('displayError', displayErrorOverdraft);
-    }
+    }, 300);
 }
 
 let runAgios = true;
