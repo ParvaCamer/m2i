@@ -108,7 +108,6 @@ html body .container-home .container-home-design .container-home-design-img {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  /*animation: slide 1s linear;*/
 }
 html body .container-home .container-home-design .stop {
   animation-play-state: paused;
@@ -238,7 +237,9 @@ html body .container-operations .background-word {
   position: absolute;
   margin: 0;
   opacity: 0.1;
-  top: 140px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
   font-size: 15vw;
   pointer-events: none;
 }
@@ -252,6 +253,9 @@ html body .amount-informations {
   justify-content: center;
   align-items: center;
   height: 550px;
+}
+html body .amount-informations-flex {
+  margin-bottom: 50px;
 }
 html body .amount-flex {
   margin-bottom: 50px;
@@ -498,6 +502,10 @@ html body .notifications #container-notifications #p-notifications {
 html body .notifications .notifications-bell {
   display: none;
 }
+html body .amount-informations-p {
+  color: red;
+  width: 400px;
+}
 html body .container,
 html body .amount-informations-input,
 html body #container-user-informations,
@@ -506,15 +514,68 @@ html body .container-button-custom {
   border-radius: 12px;
 }
 @media screen and (max-width: 1200px) {
+  html body html,
+  html body body {
+    overflow-x: 0 !important;
+  }
   html body body {
     margin: 0;
   }
   html body .icon-image {
     width: 100px;
+    z-index: 2;
   }
-  html body h1 {
-    font-size: 1.8em;
-    margin: 20px 0;
+  html body #container-home {
+    display: flex;
+    flex-direction: column;
+  }
+  html body .container-home-design {
+    width: 90% !important;
+    padding: 20px !important;
+    height: 100vh !important;
+  }
+  html body #container-home-title {
+    width: 100%;
+    font-size: 1.2em;
+    z-index: 2;
+  }
+  html body #container-home-title-h2 {
+    font-size: 1em;
+    z-index: 2;
+  }
+  html body #design-img {
+    width: 180px;
+  }
+  html body .container-image-background {
+    width: 300px !important;
+  }
+  html body #container-home-button {
+    position: relative;
+    top: 50px;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  html body .container-design-svg {
+    overflow: initial !important;
+    position: relative;
+    height: 0 !important;
+  }
+  html body #blobSvg {
+    display: none !important;
+  }
+  html body #informations-name {
+    margin-bottom: 10px;
+  }
+  html body #display-open-account-flex {
+    height: 85vh;
+    width: 80vw;
+    z-index: 3;
+    padding: 10px;
+  }
+  html body #amount-informations-flex {
+    flex-direction: column;
   }
   html body #amount-informations {
     padding: 0 10px;
@@ -542,6 +603,8 @@ html body .container-button-custom {
   }
   html body #amount-informations-p {
     margin-top: 20px;
+    width: auto;
+    padding: 0;
   }
   html body #container-operations-error,
   html body #amount-informations-ask-overdraft-error,
@@ -565,7 +628,7 @@ html body .container-button-custom {
     border: 1px solid #818181;
   }
   html body #container-user-informations {
-    width: 90%;
+    width: 70vw;
   }
   html body .container-button {
     gap: 20px;
@@ -603,19 +666,5 @@ html body .container-button-custom {
   html body #p-notifications {
     font-size: 1.15em;
     margin-bottom: 0;
-  }
-}
-@keyframes slide {
-  0% {
-    width: 400px;
-    left: -50px;
-  }
-  70% {
-    opacity: 1;
-  }
-  100% {
-    left: 1000px;
-    opacity: 0;
-    width: 150px;
   }
 }

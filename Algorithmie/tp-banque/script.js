@@ -119,6 +119,9 @@ function getOverdraft() {
             if (window.innerWidth < 1200 && initialAmount > 0) {
                 changeStyle('container-user', 'display', 'flex');
                 changeStyle('container-home', 'display', 'none');
+                changeStyle('amount-overdraft', 'display', 'none');
+                changeStyle('amount-agios', 'display', 'none');
+                changeStyle('bell', 'display', 'block');
                 setTimeout(() => {
                     changeStyle('container-user-informations', 'opacity', 1);
                     changeStyle('container-button', 'opacity', '1');
@@ -126,7 +129,6 @@ function getOverdraft() {
             } else {
                 changeStyle('container-user', 'display', 'grid');
                 changeStyle('container-home', 'display', 'none');
-                changeStyle('amount-overdraft', 'display', 'none');
                 changeStyle('amount-overdraft', 'display', 'none');
                 changeStyle('amount-agios', 'display', 'none');
                 setTimeout(() => {
