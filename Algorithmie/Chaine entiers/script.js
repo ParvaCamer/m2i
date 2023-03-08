@@ -7,7 +7,7 @@ function chaines() {
 
         while (result < value) {
             result += j;
-            j++
+            j++;
         }
 
         if (result === value) {
